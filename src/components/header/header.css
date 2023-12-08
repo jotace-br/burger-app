@@ -15,9 +15,7 @@
 
 .banner-container img {
   width: 100%;
-  height: auto;
-  /* TODO: Corrigir foto faltando espaço em telas maiores */
-  /* max-height: 150px;  */
+  height: 150px;
   max-width: 100%;
 
   object-fit: cover;
