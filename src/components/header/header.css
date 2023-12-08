@@ -3,7 +3,9 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
+
   height: 52px;
+
   color: white;
 }
 
@@ -12,9 +14,10 @@
 }
 
 .logo-container img {
-  max-width: 100%;
   height: auto;
   min-height: 150px;
+  max-width: 100%;
+
   object-fit: cover;
 }
 
@@ -22,32 +25,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 100%;
 }
 
 .nav-links {
-  list-style: none;
   display: flex;
+  list-style: none;
 }
 
 .nav-links.show {
   display: flex;
   flex-direction: column;
-  background-color: #3f2c25;
+
+  background-color: #3f2c25; /* Api doesn't have a secondary color */
 }
 
 .nav-links li {
   width: 202px;
-  gap: 10px;
-  text-transform: uppercase;
   padding: 14px;
+  gap: 10px;
+
+  text-transform: uppercase;
+  border-bottom: 5px solid transparent;
+
   transition: border-bottom 0.3s ease;
-  border-bottom: 5px solid transparent; /* Initially, no border */
 }
 
 .nav-links li:hover {
   cursor: pointer;
-  background-color: #3b2923;
+  background-color: #3b2923; /* Api doesn't have a hover color */
 }
 
 .nav-links li.active {
@@ -56,6 +63,7 @@
 
 .nav-links li a {
   width: 100%;
+
   text-decoration: none;
   color: white;
 }
@@ -76,9 +84,11 @@
 .line3 {
   width: 16px;
   height: 2px;
+
   background-color: white;
   border-radius: 4px;
   margin: 5px;
+
   transition: transform 0.3s ease; /* Added transition for burger icon */
 }
 
@@ -94,15 +104,19 @@
   transform: rotate(45deg) translate(-4.5px, -5px);
 }
 
+/* Label for mobile menu */
 .current-label {
+  display: none;
+
   position: absolute;
   top: 15;
   left: 50%;
   transform: translate(-50%, 0);
-  color: white;
+
   font-size: 1.05em;
   font-weight: 500;
-  display: none;
+
+  color: white;
 }
 
 /* Media Query for Responsive Design */
@@ -114,23 +128,26 @@
   .nav-links {
     display: none;
     align-items: center;
+
     width: 100%;
+
     position: absolute;
     top: 64px;
   }
 
   .nav-links.show {
     width: 100%;
-
-    top: 0;
     height: 100vh;
     justify-content: center;
+
+    top: 0;
     font-size: 2em;
   }
 
   .nav-links li {
-    padding: 24px 0;
     width: 100%;
+
+    padding: 24px 0;
     cursor: pointer;
   }
 
@@ -146,13 +163,9 @@
     display: block;
   }
 
-  .navbar {
-    flex-direction: row-reverse;
-  }
-
   .current-label {
     display: block;
-    text-align: center;
     width: 100%;
+    text-align: center;
   }
 }
