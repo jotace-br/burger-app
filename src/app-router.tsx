@@ -6,13 +6,13 @@ import { fetchRestaurantDetails } from './api/api';
 import { useDataFetcher } from './hooks/use-data-fetcher';
 import { Restaurant } from './types/types';
 import { Suspense } from 'react';
+import { Spinner } from './components/spinner';
 
 export const AppRouter = () => {
   const { data } = useDataFetcher<Restaurant>(fetchRestaurantDetails);
 
   if (!data) {
-    // TODO: Make a spinner
-    return <Suspense fallback={<div>loading...</div>}></Suspense>;
+    return <Suspense fallback={<Spinner />}></Suspense>;
   }
 
   return (
