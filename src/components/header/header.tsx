@@ -74,7 +74,7 @@ export const Header = ({ restaurantDetails, children }: HeaderProps) => {
         )}
       </nav>
 
-      <div className='logo-container'>
+      <div className='banner-container'>
         <img src={webSettings.bannerImage} alt='Burgers Grill House' />
       </div>
       <Outlet />

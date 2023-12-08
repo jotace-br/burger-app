@@ -9,11 +9,11 @@
   color: white;
 }
 
-.logo-container {
+.banner-container {
   height: 150px;
 }
 
-.logo-container img {
+.banner-container img {
   height: auto;
   min-height: 150px;
   max-width: 100%;
