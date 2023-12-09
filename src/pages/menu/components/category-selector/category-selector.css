@@ -1,0 +1,10 @@
+.category-selector {
+  display: flex;
+  width: 100%;
+}
+
+@media screen and (max-width: 400px) {
+  .category-selector {
+    overflow: auto;
+  }
+}
