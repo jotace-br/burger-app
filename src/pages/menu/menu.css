@@ -12,9 +12,30 @@
 }
 
 .content-container {
-  /* border: 1px solid black; */
   background-color: #f8f9fa;
   width: 100%;
   max-width: 1024px;
   margin-bottom: 6px;
+}
+
+.main-content {
+  max-width: 600px;
+  margin: 16px;
+}
+
+@media screen and (max-width: 1024px) {
+  .menu-search-container {
+    padding: 0 16px;
+  }
+  .menu-container {
+    padding: 0 16px;
+    background-color: #fff;
+  }
+
+  .content-container {
+    background-color: inherit;
+  }
+}
+
+@media screen and (max-width: 768px) {
 }
