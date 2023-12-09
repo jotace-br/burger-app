@@ -1,4 +1,4 @@
-export interface WebSettings {
+export type WebSettings = {
   id: number;
   venueId: number;
   bannerImage: string;
@@ -6,9 +6,9 @@ export interface WebSettings {
   primaryColour: string;
   primaryColourHover: string;
   navBackgroundColour: string;
-}
+};
 
-export interface Restaurant {
+export interface IRestaurant {
   id: number;
   name: string;
   internalName: string;
