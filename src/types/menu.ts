@@ -3,7 +3,7 @@ interface MenuItemImage {
   image: string;
 }
 
-interface MenuItem {
+export interface MenuItem {
   id: number;
   name: string;
   description: string | null;
@@ -26,7 +26,7 @@ interface MenuItemModifier {
   items: MenuItem[];
 }
 
-interface MenuSection {
+export interface MenuSection {
   id: number;
   name: string;
   description: string | null;
