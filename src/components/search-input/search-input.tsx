@@ -1,8 +1,13 @@
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { SearchIcon } from '../../assets/icons/search-icon';
 import './search-input.css';
 
-export const SearchInput = () => {
+interface SearchInputProps {
+  value?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export const SearchInput = ({ value, onChange }: SearchInputProps) => {
   return (
     <div className='search-container'>
       <SearchIcon />
@@ -10,6 +15,8 @@ export const SearchInput = () => {
         className='search-input'
         type='search'
         placeholder='Search menu items'
+        value={value}
+        onChange={onChange}
       />
     </div>
   );
