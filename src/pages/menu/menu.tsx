@@ -1,17 +1,19 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { fetchMenuDetails } from '../../api/api';
-import { SearchInput } from '../../components/search-input/search-input';
+import { SearchInput } from '../../components/search-input';
 import { Spinner } from '../../components/spinner';
 import { useDataFetcher } from '../../hooks/use-data-fetcher';
-import { IMenu, MenuItem } from '../../types/menu';
+import { IMenu, IMenuItem } from '../../types/menu';
 import './menu.css';
 import { CategorySelector } from './components/category-selector';
 import { useCategory } from '../../contexts/category-context';
+import { Accordion } from './components/accordion/accordion';
+import { MenuItem } from './components/menu-item/menu-item';
 
 export const Menu = () => {
   const { data, loading } = useDataFetcher<IMenu>(fetchMenuDetails);
   const [searchValue, setSearchValue] = useState('');
-  const [searchResults, setSearchResults] = useState<MenuItem[]>();
+  const [searchResults, setSearchResults] = useState<IMenuItem[]>();
 
   const { selectedCategory } = useCategory();
 
@@ -19,27 +21,6 @@ export const Menu = () => {
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(value);
-  };
-
-  const truncateString = (text: string, maxLength = 55) => {
-    if (text.length <= maxLength) {
-      return text;
-    }
-
-    const words = text.split(' ');
-    let truncatedText = '';
-
-    for (const word of words) {
-      if (truncatedText.length + word.length + 1 <= maxLength) {
-        truncatedText += word + ' ';
-      } else {
-        break;
-      }
-    }
-
-    truncatedText =
-      truncatedText.trim() + (truncatedText.length < text.length ? '...' : '');
-    return truncatedText;
   };
 
   useEffect(() => {
@@ -77,72 +58,29 @@ export const Menu = () => {
 
             {searchValue.length >= 2 ? (
               <section className='search-results'>
-                {searchValue.length >= 2 && (
-                  <ul>
-                    {searchResults?.map((item) => (
-                      <>
-                        <li key={item.id}>{item.name}</li>
-                        <p>{truncateString(item.description || '')}</p>
-                        <p>R${item.price.toFixed(2)}</p>
-                        {item?.images?.length ? (
-                          <img
-                            src={item.images[0].image}
-                            alt={item.name}
-                            width='50px'
-                          />
-                        ) : null}
-                      </>
-                    ))}
-
-                    {!searchResults?.length ? (
-                      <p>nenhum item encontrado.</p>
-                    ) : null}
-                  </ul>
-                )}
+                {searchValue.length >= 2 && <MenuItem items={searchResults} />}
               </section>
-            ) : // TODO: componentizar isso, pfv
-            selectedCategory ? (
-              // TODO: Criar componente genérico de categoria com collapse
-              <p>
-                {selectedCategory.items.map((item) => (
-                  <>
-                    <p>{selectedCategory.name}</p>
-                    <p>{item.name}</p>
-                    <p>{truncateString(item.description || '')}</p>
-                    <p>R${item.price.toFixed(2)}</p>
-                    {item?.images?.length ? (
-                      <img
-                        src={item.images[0].image}
-                        alt={item.name}
-                        width='50px'
-                      />
-                    ) : null}
-                  </>
-                ))}
-              </p>
+            ) : selectedCategory ? (
+              <Accordion
+                key={selectedCategory.id}
+                sectionName={selectedCategory.name}
+              >
+                <MenuItem items={selectedCategory.items} />
+              </Accordion>
             ) : (
               data?.sections.map((section) => (
-                <>
-                  <p>{section.name}</p>
-                  {section.items?.map((item) => {
-                    return (
-                      <div style={{ margin: 16 }}>
-                        <p>{item.name}</p>
-                        <p>{truncateString(item.description || '')}</p>
-                        {<p>R${item.price.toFixed(2)}</p>}
-                        {item?.images?.length ? (
-                          <img
-                            src={item.images[0].image}
-                            alt={item.name}
-                            width='50px'
-                          />
-                        ) : null}
-                      </div>
-                    );
-                  })}
-                </>
+                <Accordion key={section.id} sectionName={section.name}>
+                  <MenuItem items={section.items} />
+                </Accordion>
               ))
             )}
+            {
+              <section className='allergen-link'>
+                <a href='https://www.pudim.com.br' target='_blank'>
+                  View allergy information
+                </a>
+              </section>
+            }
           </section>
         </div>
       </div>
