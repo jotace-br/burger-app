@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CloseIcon } from '../../assets/icons/close-icon';
 import { NoImageIcon } from '../../assets/icons/no-image-icon';
 import { IMenuItem } from '../../types/menu';
@@ -37,8 +37,8 @@ export const ProductModal = ({
     {}
   );
 
-  const calculateTotalPrice = useCallback(
-    (newQuantity: number) => {
+  const calculateTotalPrice = useMemo(
+    () => (newQuantity: number) => {
       let totalPrice = initialTotalPrice;
 
       if (selectedProduct && selectedProduct.modifiers) {
@@ -97,7 +97,7 @@ export const ProductModal = ({
     }
   }, [selectedProduct]);
 
-  const resetModal = useCallback(() => {
+  const handleResetModal = useCallback(() => {
     setQuantity(INITIAL_QUANTITY);
     if (selectedProduct) {
       setTotalPrice(initialTotalPrice * INITIAL_QUANTITY);
@@ -113,13 +113,13 @@ export const ProductModal = ({
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'visible';
-      resetModal();
+      handleResetModal();
     }
 
     return () => {
       document.body.style.overflow = 'visible';
     };
-  }, [isOpen, resetModal]);
+  }, [isOpen, handleResetModal]);
 
   if (!isOpen) {
     return null;
@@ -156,7 +156,7 @@ export const ProductModal = ({
     });
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModalClick = () => {
     onClose();
   };
 
@@ -190,7 +190,7 @@ export const ProductModal = ({
     };
     console.log(formattedCheckoutObj);
 
-    handleCloseModal();
+    handleCloseModalClick();
   };
 
   if (!isOpen || !selectedProduct) {
@@ -198,9 +198,9 @@ export const ProductModal = ({
   }
 
   return (
-    <div className='modal-overlay' onClick={handleCloseModal}>
+    <div className='modal-overlay'>
       <div className='modal-content' onClick={stopPropagation}>
-        <button className='close-button' onClick={handleCloseModal}>
+        <button className='modal-close-button' onClick={handleCloseModalClick}>
           <CloseIcon />
         </button>
 

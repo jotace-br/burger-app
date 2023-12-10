@@ -25,7 +25,7 @@
   flex-direction: column;
 }
 
-.close-button {
+.modal-close-button {
   width: 480px;
   padding: 16px;
   height: 64px;
@@ -165,7 +165,7 @@
     padding-bottom: 50px;
   }
 
-  .close-button {
+  .modal-close-button {
     width: 100%;
   }
 

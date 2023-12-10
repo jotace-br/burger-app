@@ -6,14 +6,12 @@
 
 @media screen and (max-width: 768px) {
   .category-selector {
-    justify-content: center;
+    justify-content: start;
   }
 }
 
 @media screen and (max-width: 400px) {
   .category-selector {
     overflow: auto;
-    justify-content: start;
-    margin: 16px;
   }
 }

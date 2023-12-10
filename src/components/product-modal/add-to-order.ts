@@ -17,6 +17,8 @@ export const BtnAddToOrder = styled.button<{ $bgColor?: string }>`
 
   transition: 0.3s background-color ease-in-out;
 
+  text-wrap: nowrap;
+
   &:hover {
     background-color: #3f2c25;
   }
@@ -24,5 +26,9 @@ export const BtnAddToOrder = styled.button<{ $bgColor?: string }>`
   &:disabled {
     background-color: #dadada;
     cursor: not-allowed;
+  }
+
+  @media screen and (max-width: 250px) {
+    text-wrap: balance;
   }
 `;

@@ -30,8 +30,12 @@ export const MenuItem = ({ items }: MenuItemProps) => {
     <>
       <div className='card'>
         <div className='card-item'>
-          {items?.map((item) =>
-            item.available ? (
+          {items?.map((item) => {
+            if (!item.available) {
+              return null;
+            }
+
+            return (
               <div
                 key={item.id}
                 className='card-content'
@@ -50,8 +54,8 @@ export const MenuItem = ({ items }: MenuItemProps) => {
                   )}
                 </div>
               </div>
-            ) : null
-          )}
+            );
+          })}
         </div>
       </div>
 
