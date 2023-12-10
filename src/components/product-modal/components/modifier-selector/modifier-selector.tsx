@@ -9,21 +9,14 @@ export type SelectedModifier = {
 interface ModifierSelectorProps {
   modifiers?: IMenuItemModifier[];
   selectedModifier: SelectedModifier;
-  setSelectedModifier: React.Dispatch<React.SetStateAction<SelectedModifier>>;
+  onSelectModifier: (modifierId: number, itemId: number) => void;
 }
 
 export const ModifierSelector = ({
   modifiers,
   selectedModifier,
-  setSelectedModifier,
+  onSelectModifier,
 }: ModifierSelectorProps) => {
-  const handleSelection = (modifierId: number, itemId: number) => {
-    setSelectedModifier((prevSelectedModifier) => ({
-      ...prevSelectedModifier,
-      [modifierId]: itemId,
-    }));
-  };
-
   if (!modifiers) {
     return null;
   }
@@ -41,7 +34,7 @@ export const ModifierSelector = ({
               <div
                 className='modifier-item-wrapper'
                 key={item.id}
-                onClick={() => handleSelection(modifier.id, item.id)}
+                onClick={() => onSelectModifier(modifier.id, item.id)}
               >
                 <div className='modifier-items-attributes'>
                   <span className='item-name'>{item.name}</span>
@@ -52,7 +45,7 @@ export const ModifierSelector = ({
                   name={modifier.name}
                   value={item.id.toString()}
                   checked={selectedModifier[modifier.id] === item.id}
-                  onChange={() => handleSelection(modifier.id, item.id)}
+                  onChange={() => onSelectModifier(modifier.id, item.id)}
                 />
               </div>
             ))}
