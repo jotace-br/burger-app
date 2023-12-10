@@ -11,12 +11,20 @@ export const findSelectedItemFromModifier = ({
   modifierId,
   itemId,
 }: FindSelectedItemFromModifierProps) => {
+  if (!modifiers || !modifiers.length) {
+    return { selectedModifier: null, selectedItem: null };
+  }
+
   // Find the modifier based on modifierId
-  const selectedModifier = modifiers?.find(
+  const selectedModifier = modifiers.find(
     (modifier) => modifier.id === modifierId
   );
 
-  if (!selectedModifier) {
+  if (
+    !selectedModifier ||
+    !selectedModifier.items ||
+    !selectedModifier.items.length
+  ) {
     return { selectedModifier: null, selectedItem: null };
   }
 
