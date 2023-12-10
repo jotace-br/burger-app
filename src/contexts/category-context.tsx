@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { MenuSection } from '../types/menu';
+import { MenuSection } from '@/types/menu';
 
 interface CategoryContextProps {
   selectedCategory: MenuSection | null;

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-// TODO: Transform this into a generic button for future use
 export const Button = styled.button<{ $bgColor?: string }>`
   height: 48px;
   background: ${(p) => p.$bgColor || '#4f372f'};

@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { CloseIcon } from '../../assets/icons/close-icon';
-import { NoImageIcon } from '../../assets/icons/no-image-icon';
-import { IMenuItem } from '../../types/menu';
-import './product-modal.css';
-import { numberToBRL } from '../../helpers/format-number-to-brl';
-import { MinusIcon } from '../../assets/icons/minus-icon';
-import { useWebSettings } from '../../theme-provider';
-import { PlusIcon } from '../../assets/icons/plus-icon';
+import { CloseIcon } from '@assets/icons/close-icon';
+import { NoImageIcon } from '@assets/icons/no-image-icon';
+import { IMenuItem } from '@/types/menu';
+import { numberToBRL } from '@helpers/format-number-to-brl';
+import { MinusIcon } from '@assets/icons/minus-icon';
+import { useWebSettings } from '@/theme-provider';
+import { PlusIcon } from '@assets/icons/plus-icon';
 import {
   ModifierSelector,
   SelectedModifier,
 } from './components/modifier-selector/modifier-selector';
-import { findSelectedItemFromModifier } from '../../helpers/find-selected-item-from-modifier';
+import { findSelectedItemFromModifier } from '@helpers/find-selected-item-from-modifier';
 import { Button } from '../button';
 import { BtnQuantity } from '../button-quantity';
+import './product-modal.css';
 
 interface ProductModalProps {
   isOpen: boolean;

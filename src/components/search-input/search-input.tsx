@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { SearchIcon } from '../../assets/icons/search-icon';
+import { SearchIcon } from '@assets/icons/search-icon';
 import './search-input.css';
 
 interface SearchInputProps {

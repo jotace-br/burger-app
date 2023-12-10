@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Header } from './components/header';
-import { Menu } from './pages/menu';
-import { NotFound } from './pages/not-found/not-found';
-import { CategoryProvider } from './contexts/category-context';
+import { Header } from '@components/header';
+import { Menu } from '@pages/menu';
+import { NotFound } from '@pages/not-found/not-found';
+import { CategoryProvider } from '@contexts/category-context';
 
 export const AppRouter = () => {
   return (

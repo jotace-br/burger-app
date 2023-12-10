@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { ProductModal } from '../../../../components/product-modal';
-import { numberToBRL } from '../../../../helpers/format-number-to-brl';
-import { truncateString } from '../../../../helpers/truncate-string';
-import { IMenuItem } from '../../../../types/menu';
+import { ProductModal } from '@components/product-modal';
+import { numberToBRL } from '@helpers/format-number-to-brl';
+import { truncateString } from '@helpers/truncate-string';
+import { IMenuItem } from '@/types/menu';
 import './menu-item.css';
 
 export interface MenuItemProps {

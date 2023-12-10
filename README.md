@@ -47,7 +47,8 @@ Explanation of the development process, methodologies, technologies, or framewor
 
 - I wish I could use antd or even MUI, that would make the project way more faster than I would have done.
 - In the process, I needed an css-in-js library due to some API specific colors, so I decided to install Styled-Components.
-- ...
+- Usually people don't use devices with dimension less than 320px (Unless you're a Galaxy Fold user), so I double checked if the page is fully responsive for Galaxy Fold users as well.
+- Created an alias for every folder, it was becoming difficult to navigate between files.
 
 ## Contributing
 

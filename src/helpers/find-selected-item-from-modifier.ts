@@ -1,4 +1,4 @@
-import { IMenuItemModifier } from '../types/menu';
+import { IMenuItemModifier } from '@/types/menu';
 
 interface FindSelectedItemFromModifierProps {
   modifiers?: IMenuItemModifier[];

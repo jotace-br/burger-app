@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { fetchMenuDetails } from '../../api/api';
-import { SearchInput } from '../../components/search-input';
-import { Spinner } from '../../components/spinner';
-import { useDataFetcher } from '../../hooks/use-data-fetcher';
-import { IMenu, IMenuItem } from '../../types/menu';
-import { useCategory } from '../../contexts/category-context';
+import { fetchMenuDetails } from '@api/api';
+import { SearchInput } from '@components/search-input';
+import { Spinner } from '@components/spinner';
+import { useDataFetcher } from '@hooks/use-data-fetcher';
+import { IMenu, IMenuItem } from '@/types/menu';
+import { useCategory } from '@contexts/category-context';
 import { MenuContent } from './components/menu-content';
 import './menu.css';
 

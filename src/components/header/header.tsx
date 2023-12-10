@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useWebSettings } from '@/theme-provider';
 import './header.css';
-import { useWebSettings } from '../../theme-provider';
 interface HeaderProps {
   children?: React.ReactNode;
 }
