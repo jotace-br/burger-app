@@ -38,7 +38,7 @@ $ yarn dev   # Or any other relevant commands for running the code (e.g: npm run
 List any assumptions made during the development of the project. This could include specific system requirements, expected input formats, or any other relevant details.
 
 - Since the list of tecnologies/libs i can use is limited, I thought about using antd at first, but then I decided to go full with pure HTML/CSS, just to make my code easier to review.
-- Assumption 2
+- There are some problems when I was coding this project, first one was using color variables from API, some specific classes cannot get the desired color by simply passing via style prop, so I decided to install Styled-Components to make sure those colors are used correctly.
 - ...
 
 ## Process and Choices
@@ -46,7 +46,7 @@ List any assumptions made during the development of the project. This could incl
 Explanation of the development process, methodologies, technologies, or frameworks used. Discuss any important decisions made during development and the reasoning behind them.
 
 - I wish I could use antd or even MUI, that would make the project way more faster than I would have done.
-- Choice 2 and rationale
+- In the process, I needed an css-in-js library due to some API specific colors, so I decided to install Styled-Components.
 - ...
 
 ## Contributing

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Restaurant } from '../../types/types';
 import './header.css';
+import { useWebSettings } from '../../theme-provider';
 interface HeaderProps {
-  restaurantDetails: Restaurant;
   children?: React.ReactNode;
 }
 
@@ -13,11 +12,10 @@ const menuItems = [
   { label: 'Contato', id: 2 },
 ];
 
-export const Header = ({ restaurantDetails, children }: HeaderProps) => {
+export const Header = ({ children }: HeaderProps) => {
   const [selectedItem, setSelectedItem] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const { webSettings } = restaurantDetails;
+  const webSettings = useWebSettings();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -45,7 +43,7 @@ export const Header = ({ restaurantDetails, children }: HeaderProps) => {
     <>
       <nav
         className='navbar'
-        style={{ backgroundColor: webSettings.navBackgroundColour }}
+        style={{ backgroundColor: webSettings?.navBackgroundColour }}
       >
         <div className='container'>
           <ul className={`nav-links ${menuOpen ? 'show' : ''}`}>
@@ -75,7 +73,7 @@ export const Header = ({ restaurantDetails, children }: HeaderProps) => {
       </nav>
 
       <div className='banner-container'>
-        <img src={webSettings.bannerImage} alt='Burgers Grill House' />
+        <img src={webSettings?.bannerImage} alt='Burgers Grill House' />
       </div>
       <Outlet />
       {children}

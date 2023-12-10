@@ -1,0 +1,17 @@
+.category-selector {
+  display: flex;
+  width: 100%;
+  justify-content: start;
+}
+
+@media screen and (max-width: 768px) {
+  .category-selector {
+    justify-content: start;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .category-selector {
+    overflow: auto;
+  }
+}
