@@ -13,6 +13,7 @@ import {
 } from './components/modifier-selector/modifier-selector';
 import { findSelectedItemFromModifier } from '../../helpers/find-selected-item-from-modifier';
 import { Button } from '../button';
+import { BtnQuantity } from '../button-quantity';
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -236,23 +237,18 @@ export const ProductModal = ({
 
         <div className='bottom-container'>
           <div className='quantity-control'>
-            <button
-              className='quantity-btn'
-              onClick={handleDecrement}
-              disabled={quantity <= 1}
-            >
+            <BtnQuantity onClick={handleDecrement} disabled={quantity <= 1}>
               <MinusIcon
                 bgColor={quantity > 1 ? webSettings?.primaryColour : '#DADADA'}
                 minusIconColor={quantity > 1 ? 'white' : '#5F5F5F'}
               />
-            </button>
+            </BtnQuantity>
             <span className='quantity-value'>{quantity}</span>
-            <button className='quantity-btn' onClick={handleIncrement}>
+            <BtnQuantity onClick={handleIncrement}>
               <PlusIcon bgColor={webSettings?.primaryColour} />
-            </button>
+            </BtnQuantity>
           </div>
           <Button
-            className='add-to-order'
             disabled={
               selectedProduct?.modifiers
                 ? !Object.keys(selectedModifier).length

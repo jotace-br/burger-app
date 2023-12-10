@@ -88,7 +88,7 @@
   padding: 0;
 }
 
-/* Add to checkout */
+/* Add to order + quantity selector container */
 .bottom-container {
   display: flex;
   flex-direction: column;
@@ -114,39 +114,10 @@
   margin-bottom: 10px;
 }
 
-.quantity-btn {
-  width: 32px;
-  height: 32px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
 .quantity-value {
   font-size: 16px;
   font-weight: bold;
   margin: 0 16px;
-}
-
-.add-to-order {
-  color: #fff;
-  border: none;
-  cursor: pointer;
-
-  height: 48px;
-  padding: 4px 24px;
-
-  border-radius: 40px;
-  background: #4f372f;
-
-  font-size: 16px;
-  font-weight: 500;
-
-  transition: 0.3s background-color ease-in-out;
-}
-
-.add-to-order:hover {
-  background-color: #3f2c25;
 }
 
 /* Media Query for Responsiveness */
