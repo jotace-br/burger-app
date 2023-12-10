@@ -34,39 +34,41 @@ export const ProductModal = ({
     selectedProduct?.price || 0
   );
   const [selectedModifier, setSelectedModifier] = useState<SelectedModifier>(
-    () => {
-      const defaultSelection: SelectedModifier = {};
+    {}
+  );
 
-      if (selectedProduct?.modifiers) {
+  const calculateTotalPrice = useCallback(
+    (newQuantity: number) => {
+      let totalPrice = initialTotalPrice;
+
+      if (selectedProduct && selectedProduct.modifiers) {
+        // Recalculate total price based on selected modifiers and quantity
         selectedProduct.modifiers.forEach((modifier) => {
-          if (modifier.items.length > 0) {
-            defaultSelection[modifier.id] = modifier.items[0].id;
+          const selectedItemId = selectedModifier[modifier.id];
+          const selectedItem = findSelectedItemFromModifier({
+            modifiers: selectedProduct.modifiers,
+            modifierId: modifier.id,
+            itemId: selectedItemId,
+          }).selectedItem;
+
+          if (selectedItem) {
+            totalPrice += selectedItem.price;
           }
         });
       }
 
-      return defaultSelection;
-    }
+      return totalPrice * newQuantity;
+    },
+    [initialTotalPrice, selectedModifier, selectedProduct]
   );
 
   // Reset state and calculate total price when modal reopens
   useEffect(() => {
     if (isOpen && selectedProduct && selectedProduct.modifiers) {
-      const defaultSelection: SelectedModifier = {};
+      let totalPrice = selectedProduct.price || 0;
 
       selectedProduct.modifiers.forEach((modifier) => {
-        if (modifier.items.length > 0) {
-          defaultSelection[modifier.id] = modifier.items[0].id;
-        }
-      });
-
-      setSelectedModifier(defaultSelection); // Reset selected modifiers to defaults
-
-      let initialTotal = selectedProduct.price || 0;
-      let modifierTotal = 0;
-
-      selectedProduct.modifiers.forEach((modifier) => {
-        const selectedItemId = defaultSelection[modifier.id];
+        const selectedItemId = selectedModifier[modifier.id];
         const selectedItem = findSelectedItemFromModifier({
           modifiers: selectedProduct.modifiers,
           modifierId: modifier.id,
@@ -74,37 +76,20 @@ export const ProductModal = ({
         }).selectedItem;
 
         if (selectedItem) {
-          modifierTotal += selectedItem.price;
+          totalPrice += selectedItem.price;
         }
       });
 
-      initialTotal += modifierTotal * quantity;
+      totalPrice *= quantity;
 
-      setTotalPrice(initialTotal);
-      setInitialTotalPrice(initialTotal - modifierTotal); // Store initial price without modifiers
+      setTotalPrice(totalPrice);
+      setInitialTotalPrice(
+        totalPrice - (totalPrice - selectedProduct.price * quantity)
+      );
     }
-  }, [isOpen, selectedProduct, quantity]);
+  }, [isOpen, selectedProduct, quantity, selectedModifier]);
 
-  // Recalculate total price when selected modifier changes
-  useEffect(() => {
-    if (selectedProduct && selectedProduct.modifiers) {
-      // Calculate the new total price based on the selected modifier and quantity
-      const selectedModifierId = Number(Object.keys(selectedModifier)[0]);
-      const selectedModifierItemId = Number(Object.values(selectedModifier)[0]);
-
-      const { selectedItem: selectedModifierItemObj } =
-        findSelectedItemFromModifier({
-          modifiers: selectedProduct.modifiers,
-          modifierId: selectedModifierId,
-          itemId: selectedModifierItemId,
-        });
-
-      if (selectedModifierItemObj) {
-        setTotalPrice(selectedModifierItemObj.price * quantity);
-      }
-    }
-  }, [selectedModifier, selectedProduct, quantity]);
-
+  // Without that, the totalPrice doesn't reset
   useEffect(() => {
     if (selectedProduct) {
       setInitialTotalPrice(selectedProduct.price || 0);
@@ -115,12 +100,14 @@ export const ProductModal = ({
   const resetModal = useCallback(() => {
     setQuantity(INITIAL_QUANTITY);
     if (selectedProduct) {
-      // ISSO AQUI TÁ DANDO UMA MERDA
-      // selectedProduct.price = initialTotalPrice; // Reset selectedProduct price
-      setTotalPrice(initialTotalPrice * INITIAL_QUANTITY); // Reset totalPrice based on initialTotalPrice and INITIAL_QUANTITY
+      setTotalPrice(initialTotalPrice * INITIAL_QUANTITY);
+    }
+    if (selectedProduct?.modifiers) {
+      setSelectedModifier({});
     }
   }, [initialTotalPrice, selectedProduct]);
 
+  // Hide overflow when the modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -142,58 +129,29 @@ export const ProductModal = ({
     e.stopPropagation(); // Prevent the click from propagating to the overlay
   };
 
+  const handleModifierSelection = (modifierId: number, itemId: number) => {
+    const updatedSelectedModifier = { ...selectedModifier };
+    updatedSelectedModifier[modifierId] = itemId;
+    setSelectedModifier(updatedSelectedModifier);
+  };
+
+  const updateQuantityAndPrice = (newQuantity: number) => {
+    setQuantity(newQuantity);
+    setTotalPrice(calculateTotalPrice(newQuantity));
+  };
+
   const handleIncrement = () => {
-    if (selectedProduct?.modifiers) {
-      const selectedModifierId = Number(Object.keys(selectedModifier)[0]);
-      const selectedModifierItemId = Number(Object.values(selectedModifier)[0]);
-
-      const { selectedItem: selectedModifierItemObj } =
-        findSelectedItemFromModifier({
-          modifiers: selectedProduct.modifiers,
-          modifierId: selectedModifierId,
-          itemId: selectedModifierItemId,
-        });
-
-      return setQuantity((prevQuantity) => {
-        const newQuantity = prevQuantity + 1;
-        if (selectedModifierItemObj) {
-          setTotalPrice(selectedModifierItemObj.price * newQuantity);
-        }
-        return newQuantity;
-      });
-    }
-
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + 1;
-      setTotalPrice(initialTotalPrice * newQuantity);
+      updateQuantityAndPrice(newQuantity);
       return newQuantity;
     });
   };
 
   const handleDecrement = () => {
-    if (selectedProduct?.modifiers) {
-      const selectedModifierId = Number(Object.keys(selectedModifier)[0]);
-      const selectedModifierItemId = Number(Object.values(selectedModifier)[0]);
-
-      const { selectedItem: selectedModifierItemObj } =
-        findSelectedItemFromModifier({
-          modifiers: selectedProduct.modifiers,
-          modifierId: selectedModifierId,
-          itemId: selectedModifierItemId,
-        });
-
-      return setQuantity((prevQuantity) => {
-        const newQuantity = prevQuantity - 1;
-        if (selectedModifierItemObj) {
-          setTotalPrice(selectedModifierItemObj.price * newQuantity);
-        }
-        return newQuantity;
-      });
-    }
-
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity - 1;
-      setTotalPrice(initialTotalPrice * newQuantity);
+      updateQuantityAndPrice(newQuantity);
       return newQuantity;
     });
   };
@@ -221,15 +179,26 @@ export const ProductModal = ({
         price = selectedModifierItemObj.price;
       }
     }
-    console.log(
-      `Added ${quantity} ${selectedProduct?.name}(s) to the order. Product value is (un.): ${price}`
-    );
-    console.log(`Total value is: ${totalPrice}`);
+
+    const formattedCheckoutObj = {
+      refIdProduct: selectedProduct?.id,
+      name: selectedProduct?.name,
+      price,
+      quantity,
+      totalPrice: totalPrice,
+      otherProps: selectedProduct,
+    };
+    console.log(formattedCheckoutObj);
+
     handleCloseModal();
   };
 
+  if (!isOpen || !selectedProduct) {
+    return null;
+  }
+
   return (
-    <div className='modal-overlay'>
+    <div className='modal-overlay' onClick={handleCloseModal}>
       <div className='modal-content' onClick={stopPropagation}>
         <button className='close-button' onClick={handleCloseModal}>
           <CloseIcon />
@@ -260,7 +229,7 @@ export const ProductModal = ({
             <ModifierSelector
               modifiers={selectedProduct?.modifiers}
               selectedModifier={selectedModifier}
-              setSelectedModifier={setSelectedModifier}
+              onSelectModifier={handleModifierSelection}
             />
           </section>
         </div>
@@ -284,11 +253,18 @@ export const ProductModal = ({
           </div>
           <BtnAddToOrder
             className='add-to-order'
-            // disabled={!!selectedProduct?.modifiers}
+            disabled={
+              selectedProduct?.modifiers
+                ? !Object.keys(selectedModifier).length
+                : false
+            }
             $bgColor={webSettings?.primaryColour}
             onClick={handleAddToOrder}
           >
-            Add to Order • {numberToBRL(totalPrice || selectedProduct?.price)}
+            {selectedProduct?.modifiers && !Object.keys(selectedModifier).length
+              ? 'Select a modifier'
+              : 'Add to Order • '}
+            {numberToBRL(totalPrice || selectedProduct?.price)}
           </BtnAddToOrder>
         </div>
       </div>
