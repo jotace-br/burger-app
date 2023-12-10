@@ -23,5 +23,6 @@ export const BtnAddToOrder = styled.button<{ $bgColor?: string }>`
 
   &:disabled {
     background-color: #dadada;
+    cursor: not-allowed;
   }
 `;
