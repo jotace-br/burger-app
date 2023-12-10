@@ -7,12 +7,12 @@ import { numberToBRL } from '../../helpers/format-number-to-brl';
 import { MinusIcon } from '../../assets/icons/minus-icon';
 import { useWebSettings } from '../../theme-provider';
 import { PlusIcon } from '../../assets/icons/plus-icon';
-import { BtnAddToOrder } from './add-to-order';
 import {
   ModifierSelector,
   SelectedModifier,
 } from './components/modifier-selector/modifier-selector';
 import { findSelectedItemFromModifier } from '../../helpers/find-selected-item-from-modifier';
+import { Button } from '../button';
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -251,7 +251,7 @@ export const ProductModal = ({
               <PlusIcon bgColor={webSettings?.primaryColour} />
             </button>
           </div>
-          <BtnAddToOrder
+          <Button
             className='add-to-order'
             disabled={
               selectedProduct?.modifiers
@@ -265,7 +265,7 @@ export const ProductModal = ({
               ? 'Select a modifier'
               : 'Add to Order • '}
             {numberToBRL(totalPrice || selectedProduct?.price)}
-          </BtnAddToOrder>
+          </Button>
         </div>
       </div>
     </div>
