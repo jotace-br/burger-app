@@ -4,7 +4,7 @@
 }
 
 .accordion-header {
-  padding: 16px 32px;
+  padding: 16px;
   height: 72px;
   cursor: pointer;
   display: flex;
