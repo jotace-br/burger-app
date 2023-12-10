@@ -4,11 +4,9 @@ import { SearchInput } from '../../components/search-input';
 import { Spinner } from '../../components/spinner';
 import { useDataFetcher } from '../../hooks/use-data-fetcher';
 import { IMenu, IMenuItem } from '../../types/menu';
-import './menu.css';
-import { CategorySelector } from '../../components/category-selector';
 import { useCategory } from '../../contexts/category-context';
-import { Accordion } from '../../components/accordion';
-import { MenuItem } from './components/menu-item/menu-item';
+import { MenuContent } from './components/menu-content';
+import './menu.css';
 
 export const Menu = () => {
   const { data, loading } = useDataFetcher<IMenu>(fetchMenuDetails);
@@ -53,35 +51,20 @@ export const Menu = () => {
           <SearchInput value={searchValue} onChange={handleSearchValue} />
         </div>
         <div className='content-container'>
-          <section className='main-content'>
-            <CategorySelector data={data?.sections} />
+          <MenuContent
+            menuDetails={data}
+            searchValue={searchValue}
+            searchResults={searchResults}
+            selectedCategory={selectedCategory}
+          >
+            <section className='allergen-link'>
+              <a href='https://www.pudim.com.br' target='_blank'>
+                View allergy information
+              </a>
+            </section>
+          </MenuContent>
 
-            {searchValue.length >= 2 ? (
-              <section className='search-results'>
-                {searchValue.length >= 2 && <MenuItem items={searchResults} />}
-              </section>
-            ) : selectedCategory ? (
-              <Accordion
-                key={selectedCategory.id}
-                sectionName={selectedCategory.name}
-              >
-                <MenuItem items={selectedCategory.items} />
-              </Accordion>
-            ) : (
-              data?.sections.map((section) => (
-                <Accordion key={section.id} sectionName={section.name}>
-                  <MenuItem items={section.items} />
-                </Accordion>
-              ))
-            )}
-            {
-              <section className='allergen-link'>
-                <a href='https://www.pudim.com.br' target='_blank'>
-                  View allergy information
-                </a>
-              </section>
-            }
-          </section>
+          <section>checkout</section>
         </div>
       </div>
     </>
