@@ -9,8 +9,8 @@ interface CategorySelectorProps {
 }
 
 const CategoryItem = styled.div<{
-  primaryColour?: string;
-  isActive?: boolean;
+  $primaryColour?: string;
+  $isActive?: boolean;
 }>`
   display: flex;
   flex-direction: column;
@@ -39,11 +39,11 @@ const CategoryItem = styled.div<{
   }
 
   ${(props) =>
-    props.isActive &&
+    props.$isActive &&
     `
-    border-bottom: 2px solid ${props.primaryColour || '#4f372f'};
+    border-bottom: 2px solid ${props.$primaryColour || '#4f372f'};
     img {
-      box-shadow: 0 0 0 2px ${props.primaryColour || '#4f372f'};
+      box-shadow: 0 0 0 2px ${props.$primaryColour || '#4f372f'};
     }
     span {
       font-weight: 600;
@@ -70,8 +70,8 @@ export const CategorySelector = ({ data }: CategorySelectorProps) => {
           <CategoryItem
             key={category.id}
             onClick={() => changeCategory(category)}
-            primaryColour={webSettings?.primaryColour}
-            isActive={selectedCategory?.name === category.name}
+            $primaryColour={webSettings?.primaryColour}
+            $isActive={selectedCategory?.name === category.name}
           >
             <img src={category.images[0].image} alt={category.name} />
             <span>{category.name}</span>
