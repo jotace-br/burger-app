@@ -1,8 +1,8 @@
 import './category-selector.css';
-import { MenuSection } from '../../../../types/menu';
+import { MenuSection } from '../../types/menu';
 import styled from 'styled-components';
-import { useWebSettings } from '../../../../theme-provider';
-import { useCategory } from '../../../../contexts/category-context';
+import { useWebSettings } from '../../theme-provider';
+import { useCategory } from '../../contexts/category-context';
 
 interface CategorySelectorProps {
   data: MenuSection[] | undefined;

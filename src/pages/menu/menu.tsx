@@ -5,9 +5,9 @@ import { Spinner } from '../../components/spinner';
 import { useDataFetcher } from '../../hooks/use-data-fetcher';
 import { IMenu, IMenuItem } from '../../types/menu';
 import './menu.css';
-import { CategorySelector } from './components/category-selector';
+import { CategorySelector } from '../../components/category-selector';
 import { useCategory } from '../../contexts/category-context';
-import { Accordion } from './components/accordion/accordion';
+import { Accordion } from '../../components/accordion';
 import { MenuItem } from './components/menu-item/menu-item';
 
 export const Menu = () => {

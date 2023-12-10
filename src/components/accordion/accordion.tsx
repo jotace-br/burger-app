@@ -1,4 +1,4 @@
-import { ArrowIcon } from '../../../../assets/icons/arrow-icon';
+import { ArrowIcon } from '../../assets/icons/arrow-icon';
 import './accordion.css';
 
 import { ReactNode, useEffect, useRef, useState } from 'react';
