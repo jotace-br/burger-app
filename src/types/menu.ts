@@ -3,7 +3,7 @@ interface MenuItemImage {
   image: string;
 }
 
-export interface MenuItem {
+export interface IMenuItem {
   id: number;
   name: string;
   description: string | null;
@@ -15,15 +15,15 @@ export interface MenuItem {
   sku: string;
   images: MenuItemImage[];
   available: boolean;
-  modifiers?: MenuItemModifier[];
+  modifiers?: IMenuItemModifier[];
 }
 
-interface MenuItemModifier {
+export interface IMenuItemModifier {
   id: number;
   name: string;
   minChoices: number;
   maxChoices: number;
-  items: MenuItem[];
+  items: IMenuItem[];
 }
 
 export interface MenuSection {
@@ -33,7 +33,7 @@ export interface MenuSection {
   position: number;
   visible: number;
   images: MenuItemImage[];
-  items: MenuItem[];
+  items: IMenuItem[];
 }
 
 export interface IMenu {
