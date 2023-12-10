@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useWebSettings } from '@/theme-provider';
 import './header.css';
-import styled from 'styled-components';
+import { BannerContainer } from '@components/banner-container';
 interface HeaderProps {
   children?: React.ReactNode;
 }
@@ -12,41 +12,6 @@ const menuItems = [
   { label: 'Entrar', id: 1 },
   { label: 'Contato', id: 2 },
 ];
-
-const BannerContainer = styled.div<{ $image?: string }>`
-  height: 150px;
-  background: lightgray;
-  background: linear-gradient(
-      90deg,
-      #36231c 18.92%,
-      rgba(54, 35, 28, 0) 50.56%,
-      #36231c 80.88%
-    ),
-    url(${(p) => p.$image || ''});
-  background-position: center;
-  background-repeat: no-repeat;
-
-  padding: 12.333px 0px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  img {
-    width: 100%;
-    height: 150px;
-    max-width: 100%;
-    object-fit: cover;
-  }
-
-  @media screen and (max-width: 768px) {
-    & {
-      background: url(${(p) => p.$image || ''});
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-  }
-`;
 
 export const Header = ({ children }: HeaderProps) => {
   const [selectedItem, setSelectedItem] = useState(0);

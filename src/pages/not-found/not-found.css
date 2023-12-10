@@ -1,0 +1,23 @@
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 10dvh;
+}
+
+.not-found-image {
+  width: 50%;
+  max-width: 300px;
+}
+
+.not-found-title {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.not-found-text {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
