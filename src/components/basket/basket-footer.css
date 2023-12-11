@@ -1,0 +1,35 @@
+.checkout-footer {
+  width: 100%;
+  background: #f8f9fa;
+  /* margin-top: 8px; */
+}
+
+.footer-subtotal,
+.footer-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-top: 1px solid #dadada;
+  color: #121212;
+}
+
+.footer-subtotal p:nth-child(2) {
+  font-weight: 500;
+  text-align: right;
+}
+
+.footer-total {
+  font-size: 24px;
+}
+
+.footer-total p:nth-child(1) {
+  /* SF Pro is not open-source  */
+  font-family: 'Switzer', sans-serif;
+  font-weight: 300;
+}
+
+.footer-total p:nth-child(2) {
+  /* SF Pro is not open-source  */
+  font-family: 'Switzer', sans-serif;
+  font-weight: 700;
+}
