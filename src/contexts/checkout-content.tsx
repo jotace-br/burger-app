@@ -1,4 +1,3 @@
-// CheckoutContext.js
 import { CheckoutObject } from '@/types/checkout';
 import { createContext, useState, useContext, ReactNode } from 'react';
 
