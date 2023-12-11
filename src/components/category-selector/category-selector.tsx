@@ -73,7 +73,13 @@ export const CategorySelector = ({ data }: CategorySelectorProps) => {
             $primaryColour={webSettings?.primaryColour}
             $isActive={selectedCategory?.name === category.name}
           >
-            <img src={category.images[0].image} alt={category.name} />
+            <img
+              src={category.images[0].image}
+              alt={category.name}
+              width='74px'
+              height='74px'
+              loading='lazy'
+            />
             <span>{category.name}</span>
           </CategoryItem>
         );

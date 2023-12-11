@@ -17,6 +17,8 @@ export const NotFound = () => {
           className='not-found-image'
           src={bubbleGumError}
           alt='404 Illustration'
+          width='300px'
+          loading='lazy'
         />
         <h1 className='not-found-title'>404 Não Encontrado</h1>
         <p className='not-found-text'>

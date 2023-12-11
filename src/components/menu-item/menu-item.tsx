@@ -76,7 +76,13 @@ export const MenuItem = ({ items }: MenuItemProps) => {
                 </div>
                 <div className='info-right'>
                   {item.images && (
-                    <img src={item.images[0].image} alt={item.name} />
+                    <img
+                      src={item.images[0].image}
+                      alt={item.name}
+                      width='128px'
+                      height='85px'
+                      loading='lazy'
+                    />
                   )}
                 </div>
               </div>
