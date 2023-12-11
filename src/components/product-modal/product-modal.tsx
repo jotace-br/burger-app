@@ -251,7 +251,7 @@ export const ProductModal = ({
             </BtnQuantity>
             <span className='quantity-value'>{quantity}</span>
             <BtnQuantity onClick={handleIncrement}>
-              <PlusIcon bgColor={webSettings?.primaryColour} />
+              <PlusIcon />
             </BtnQuantity>
           </div>
           <Button
