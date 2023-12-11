@@ -3,6 +3,7 @@ import { Header } from '@components/header';
 import { Menu } from '@pages/menu';
 import { NotFound } from '@pages/not-found';
 import { CategoryProvider } from '@contexts/category-context';
+import { CheckoutProvider } from './contexts/checkout-content';
 
 export const AppRouter = () => {
   return (
@@ -13,7 +14,9 @@ export const AppRouter = () => {
             index
             element={
               <CategoryProvider>
-                <Menu />
+                <CheckoutProvider>
+                  <Menu />
+                </CheckoutProvider>
               </CategoryProvider>
             }
           />
