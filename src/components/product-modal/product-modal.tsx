@@ -18,13 +18,13 @@ import { CheckoutObject } from '@/types/checkout';
 import { useCheckout } from '@/contexts/checkout-content';
 
 interface ProductModalProps {
-  isOpen: boolean;
+  isProductModalOpen: boolean;
   onClose: () => void;
   selectedProduct: IMenuItem | undefined;
 }
 
 export const ProductModal = ({
-  isOpen,
+  isProductModalOpen,
   onClose,
   selectedProduct,
 }: ProductModalProps) => {
@@ -68,7 +68,7 @@ export const ProductModal = ({
 
   // Reset state and calculate total price when modal reopens
   useEffect(() => {
-    if (isOpen && selectedProduct && selectedProduct.modifiers) {
+    if (isProductModalOpen && selectedProduct && selectedProduct.modifiers) {
       let totalPrice = selectedProduct.price || 0;
 
       selectedProduct.modifiers.forEach((modifier) => {
@@ -91,7 +91,7 @@ export const ProductModal = ({
         totalPrice - (totalPrice - selectedProduct.price * quantity)
       );
     }
-  }, [isOpen, selectedProduct, quantity, selectedModifier]);
+  }, [isProductModalOpen, selectedProduct, quantity, selectedModifier]);
 
   // Without that, the totalPrice doesn't reset
   useEffect(() => {
@@ -111,9 +111,8 @@ export const ProductModal = ({
     }
   }, [initialTotalPrice, selectedProduct]);
 
-  // Hide overflow when the modal is open
   useEffect(() => {
-    if (isOpen) {
+    if (isProductModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'visible';
@@ -123,14 +122,14 @@ export const ProductModal = ({
     return () => {
       document.body.style.overflow = 'visible';
     };
-  }, [isOpen, handleResetModal]);
+  }, [isProductModalOpen, handleResetModal]);
 
-  if (!isOpen) {
+  if (!isProductModalOpen) {
     return null;
   }
 
   const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation(); // Prevent the click from propagating to the overlay
+    e.stopPropagation();
   };
 
   const handleModifierSelection = (modifierId: number, itemId: number) => {
@@ -165,7 +164,6 @@ export const ProductModal = ({
   };
 
   const handleAddToOrder = () => {
-    // TODO: ADD CHECKOUT CONTEXT TO MAKE THIS THING PRETTY OMG
     let price = selectedProduct?.price;
     let modifier;
 
@@ -200,7 +198,7 @@ export const ProductModal = ({
     handleCloseModalClick();
   };
 
-  if (!isOpen || !selectedProduct) {
+  if (!isProductModalOpen || !selectedProduct) {
     return null;
   }
 
