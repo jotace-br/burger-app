@@ -1,0 +1,35 @@
+/* checkout-modal.css */
+
+.thanks-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  z-index: 9999;
+}
+
+.thanks-modal-content {
+  background-color: #fff;
+  padding: 48px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 80%;
+}
+
+.thanks-modal-content img {
+  height: 200px;
+  object-fit: contain;
+}
+
+/* Estilos para o botão Fechar */
+.thanks-modal-content button {
+  margin-top: 16px;
+  width: 100%;
+}
