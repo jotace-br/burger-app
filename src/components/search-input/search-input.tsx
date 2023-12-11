@@ -15,6 +15,7 @@ export const SearchInput = ({ value, onChange }: SearchInputProps) => {
       </span>
       <input
         className='search-input'
+        name='search-input'
         type='search'
         placeholder='Search menu items'
         value={value}
