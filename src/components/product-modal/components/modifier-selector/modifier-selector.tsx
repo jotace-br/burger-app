@@ -1,10 +1,7 @@
 import { IMenuItemModifier } from '@/types/menu';
 import { numberToBRL } from '@helpers/format-number-to-brl';
 import './modifier-selector.css';
-
-export type SelectedModifier = {
-  [key: string]: number;
-};
+import { SelectedModifier } from './types';
 
 interface ModifierSelectorProps {
   modifiers?: IMenuItemModifier[];

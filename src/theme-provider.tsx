@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { fetchRestaurantDetails } from './api/api';
-import { WebSettings } from './types/types';
+import { fetchRestaurantDetails } from '@api/api';
+import { WebSettings } from '@/types/types';
 
 interface WebSettingsProviderProps {
   children: React.ReactNode;

@@ -1,4 +1,4 @@
-import { IMenuItem } from './menu';
+import { IMenuItem } from '@/types/menu';
 
 export type CheckoutObject = {
   refIdProduct: number | undefined;

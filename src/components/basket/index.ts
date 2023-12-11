@@ -9,6 +9,5 @@ export const Basket = {
   Header: BasketHeader,
   Content: BasketContent,
   Footer: BasketFooter,
+  Item: BasketItem,
 };
-
-export { BasketItem };

@@ -1,5 +1,5 @@
 import { CheckoutObject } from '@/types/checkout';
-import { numberToBRL } from './format-number-to-brl';
+import { numberToBRL } from '@helpers/format-number-to-brl';
 
 export const sumTotalPrices = (data?: CheckoutObject[]) => {
   if (!data) {

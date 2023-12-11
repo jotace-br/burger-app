@@ -6,13 +6,11 @@ import { numberToBRL } from '@helpers/format-number-to-brl';
 import { MinusIcon } from '@assets/icons/minus-icon';
 import { useWebSettings } from '@/theme-provider';
 import { PlusIcon } from '@assets/icons/plus-icon';
-import {
-  ModifierSelector,
-  SelectedModifier,
-} from './components/modifier-selector/modifier-selector';
+import { ModifierSelector } from './components/modifier-selector';
+import { SelectedModifier } from './components/modifier-selector/types';
 import { findSelectedItemFromModifier } from '@helpers/find-selected-item-from-modifier';
-import { Button } from '../button';
-import { BtnQuantity } from '../button-quantity';
+import { Button } from '@components/button';
+import { BtnQuantity } from '@components/button-quantity';
 import './product-modal.css';
 import { CheckoutObject } from '@/types/checkout';
 import { useCheckout } from '@/contexts/checkout-content';

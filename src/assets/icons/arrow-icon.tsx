@@ -1,4 +1,4 @@
-import { useWebSettings } from '../../theme-provider';
+import { useWebSettings } from '@/theme-provider';
 
 interface ArrowIconProps {
   className?: string;

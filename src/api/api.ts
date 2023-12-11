@@ -1,5 +1,5 @@
-import { IMenu } from '../types/menu';
-import { IRestaurant } from '../types/types';
+import { IMenu } from '@/types/menu';
+import { IRestaurant } from '@/types/types';
 
 const API_BASE_URL = 'https://run.mocky.io/v3/';
 
