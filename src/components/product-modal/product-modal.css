@@ -140,6 +140,10 @@
     width: 100%;
   }
 
+  .modal-modifier-selector {
+    border-bottom: 1px solid #eee;
+  }
+
   .product-photo {
     height: 265px;
     max-height: 100%;

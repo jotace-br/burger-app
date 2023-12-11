@@ -1,7 +1,7 @@
 .checkout-footer {
   width: 100%;
   background: #f8f9fa;
-  /* margin-top: 8px; */
+  border-top: 1px solid #eee;
 }
 
 .footer-subtotal,
@@ -9,8 +9,12 @@
   display: flex;
   justify-content: space-between;
   padding: 16px;
-  border-top: 1px solid #dadada;
   color: #121212;
+}
+
+.footer-divider {
+  height: 1px;
+  background-color: #dadada;
 }
 
 .footer-subtotal p:nth-child(2) {
@@ -32,4 +36,10 @@
   /* SF Pro is not open-source  */
   font-family: 'Switzer', sans-serif;
   font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+  .footer-divider {
+    margin: 0 16px;
+  }
 }
