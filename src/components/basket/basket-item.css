@@ -53,3 +53,9 @@
   padding: 24px;
   color: #464646;
 }
+
+@media screen and (max-width: 768px) {
+  .basket-item {
+    border-top: 1px solid #eee;
+  }
+}
