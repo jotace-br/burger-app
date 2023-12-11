@@ -14,6 +14,8 @@ import { findSelectedItemFromModifier } from '@helpers/find-selected-item-from-m
 import { Button } from '../button';
 import { BtnQuantity } from '../button-quantity';
 import './product-modal.css';
+import { CheckoutObject } from '@/types/checkout';
+import { useCheckout } from '@/contexts/checkout-content';
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -28,6 +30,7 @@ export const ProductModal = ({
 }: ProductModalProps) => {
   const INITIAL_QUANTITY = 1;
   const webSettings = useWebSettings();
+  const { addToCheckout } = useCheckout();
 
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState<number>();
@@ -164,6 +167,7 @@ export const ProductModal = ({
   const handleAddToOrder = () => {
     // TODO: ADD CHECKOUT CONTEXT TO MAKE THIS THING PRETTY OMG
     let price = selectedProduct?.price;
+    let modifier;
 
     if (selectedProduct?.modifiers) {
       const selectedModifierId = Number(Object.keys(selectedModifier)[0]);
@@ -178,19 +182,21 @@ export const ProductModal = ({
 
       if (selectedModifierItemObj) {
         price = selectedModifierItemObj.price;
+        modifier = selectedModifierItemObj;
       }
     }
 
-    const formattedCheckoutObj = {
+    const formattedCheckoutObj: CheckoutObject = {
       refIdProduct: selectedProduct?.id,
       name: selectedProduct?.name,
       price,
       quantity,
+      modifierProps: selectedProduct?.modifiers ? modifier : undefined,
       totalPrice: totalPrice,
       otherProps: selectedProduct,
     };
-    console.log(formattedCheckoutObj);
 
+    addToCheckout(formattedCheckoutObj);
     handleCloseModalClick();
   };
 
@@ -199,7 +205,7 @@ export const ProductModal = ({
   }
 
   return (
-    <div className='modal-overlay'>
+    <div className='modal-overlay' onClick={handleCloseModalClick}>
       <div className='modal-content' onClick={stopPropagation}>
         <button className='modal-close-button' onClick={handleCloseModalClick}>
           <CloseIcon />

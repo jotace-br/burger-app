@@ -105,6 +105,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index: 2;
 }
 
 .quantity-control {
@@ -120,7 +121,6 @@
   margin: 0 16px;
 }
 
-/* Media Query for Responsiveness */
 @media screen and (max-width: 768px) {
   .modal-content {
     width: 100%;
@@ -143,5 +143,16 @@
   .product-photo {
     height: 265px;
     max-height: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) and (max-height: 450px) {
+  .product-photo {
+    height: 0;
+  }
+
+  .modal-content-container {
+    max-height: 100%;
+    padding-bottom: 55dvh;
   }
 }
