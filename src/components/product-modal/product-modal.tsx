@@ -212,6 +212,9 @@ export const ProductModal = ({
             className='product-photo'
             src={selectedProduct?.images[0].image}
             alt={selectedProduct?.name}
+            width='100%'
+            height='320px'
+            loading='lazy'
           />
         ) : (
           <div className='no-photo'>

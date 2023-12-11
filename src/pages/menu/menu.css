@@ -46,7 +46,7 @@
 
 @media screen and (max-width: 1024px) {
   .menu-search-container {
-    padding: 0 16px;
+    padding: 0 40px;
   }
   .menu-container {
     padding: 0 16px;
@@ -59,6 +59,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .menu-search-container {
+    padding: 0 16px;
+  }
+
   .menu-container,
   .content-container {
     padding: 0;
