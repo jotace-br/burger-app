@@ -1,0 +1,160 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+  height: 52px;
+
+  color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links.show {
+  display: flex;
+  flex-direction: column;
+
+  background-color: #3f2c25; /* Api doesn't have a secondary color */
+}
+
+.nav-links li {
+  width: 202px;
+  padding: 14px;
+  gap: 10px;
+
+  text-transform: uppercase;
+  border-bottom: 5px solid transparent;
+
+  transition: border-bottom 0.3s ease;
+}
+
+.nav-links li:hover {
+  cursor: pointer;
+  background-color: #3b2923; /* Api doesn't have a hover color */
+}
+
+.nav-links li.active {
+  border-bottom: 5px solid white; /* Border for the active item */
+}
+
+.nav-links li a {
+  width: 100%;
+
+  text-decoration: none;
+  color: white;
+}
+
+/* Hamburger Menu Styles */
+.burger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 99;
+
+  position: absolute;
+  right: 20px;
+}
+
+.line1,
+.line2,
+.line3 {
+  width: 16px;
+  height: 2px;
+
+  background-color: white;
+  border-radius: 4px;
+  margin: 5px;
+
+  transition: transform 0.3s ease; /* Added transition for burger icon */
+}
+
+.change1 {
+  transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+.change2 {
+  opacity: 0;
+}
+
+.change3 {
+  transform: rotate(45deg) translate(-4.5px, -5px);
+}
+
+/* Label for mobile menu */
+.current-label {
+  display: none;
+
+  position: absolute;
+  top: 15;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  font-size: 1.05em;
+  font-weight: 500;
+
+  color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    height: 64px;
+  }
+
+  .nav-links {
+    display: none;
+    align-items: center;
+
+    width: 100%;
+
+    position: absolute;
+    top: 64px;
+  }
+
+  .nav-links.show {
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+
+    top: 0;
+    font-size: 2em;
+
+    z-index: 9;
+  }
+
+  .nav-links li {
+    width: 100%;
+
+    padding: 24px 0;
+    cursor: pointer;
+  }
+
+  .nav-links li.active {
+    border-bottom: 1px solid #ffffff00;
+  }
+
+  .nav-links li a {
+    width: 100%;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .current-label {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+}

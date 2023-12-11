@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
 
-interface UseDataFetcherProps {
-  fetcher: () => Promise<unknown>;
-}
-
-export const useDataFetcher = ({ fetcher }: UseDataFetcherProps) => {
-  const [data, setData] = useState<unknown>(null);
+export const useDataFetcher = <T,>(fetcher: () => Promise<T>) => {
+  const [data, setData] = useState<T>();
   const [error, setError] = useState<Error>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+
       try {
         const response = await fetcher();
         setData(response);
@@ -22,7 +20,7 @@ export const useDataFetcher = ({ fetcher }: UseDataFetcherProps) => {
     };
 
     fetchData();
-  }, [fetcher]);
+  }, []);
 
   return { data, error, loading };
 };

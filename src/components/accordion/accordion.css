@@ -1,0 +1,48 @@
+/* Accordion Styles */
+.accordion {
+  width: 100%;
+}
+
+.accordion-header {
+  padding: 16px;
+  height: 72px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-header h2 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28.13px;
+  letter-spacing: 0.5px;
+  color: #121212;
+}
+
+.arrow {
+  display: inline-block;
+  transform: rotate(180deg);
+  transition: transform 0.3s ease-out;
+}
+
+.arrow.down {
+  transform: rotate(0deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  max-height: max-content;
+}
+
+.accordion-content.open {
+  max-height: max-content;
+}
+
+@media screen and (max-width: 768px) {
+  .accordion-header {
+    padding: 16px;
+  }
+}
