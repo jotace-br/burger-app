@@ -86,7 +86,7 @@ export const MenuItem = ({ items }: MenuItemProps) => {
       </div>
 
       <ProductModal
-        isOpen={isProductModalOpen}
+        isProductModalOpen={isProductModalOpen}
         onClose={() => setIsProductModalOpen(false)}
         selectedProduct={selectedProduct}
       />

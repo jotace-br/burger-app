@@ -5,11 +5,10 @@ import { Spinner } from '@components/spinner';
 import { useDataFetcher } from '@hooks/use-data-fetcher';
 import { IMenu, IMenuItem } from '@/types/menu';
 import { useCategory } from '@contexts/category-context';
-import { MenuContent } from './menu-components/menu-content';
-import { MenuBasket } from './menu-components/menu-basket';
 import './menu.css';
+import { Menu } from '.';
 
-export const Menu = () => {
+export const PageMenu = () => {
   const { data, loading } = useDataFetcher<IMenu>(fetchMenuDetails);
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState<IMenuItem[]>();
@@ -53,7 +52,7 @@ export const Menu = () => {
           <SearchInput value={searchValue} onChange={handleSearchValue} />
         </div>
         <div className='content-container'>
-          <MenuContent
+          <Menu.Content
             menuDetails={data}
             searchValue={searchValue}
             searchResults={searchResults}
@@ -67,9 +66,8 @@ export const Menu = () => {
                 View allergy information
               </a>
             </section>
-          </MenuContent>
-
-          <MenuBasket />
+          </Menu.Content>
+          <Menu.Basket />
         </div>
       </div>
     </>
