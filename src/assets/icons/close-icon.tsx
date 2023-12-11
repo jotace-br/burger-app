@@ -1,4 +1,4 @@
-import { useWebSettings } from '../../theme-provider';
+import { useWebSettings } from '@/theme-provider';
 
 export const CloseIcon = () => {
   const theme = useWebSettings();

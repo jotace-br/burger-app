@@ -15,7 +15,7 @@ export const Accordion = ({ sectionName, children }: AccordionProps) => {
 
   useEffect(() => {
     if (contentRef.current && isOpen) {
-      return setContentHeight(`${contentRef.current.scrollHeight + 150}px`);
+      return setContentHeight(`${contentRef.current.scrollHeight + 250}dvh`);
     }
 
     return setContentHeight('0px');

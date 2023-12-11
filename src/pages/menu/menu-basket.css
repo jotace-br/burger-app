@@ -1,0 +1,39 @@
+.basket-pc-container {
+  display: block;
+}
+
+.basket-mobile-container {
+  display: none;
+  padding: 8px 24px 24px 24px;
+
+  background: rgba(255, 255, 255, 0.3);
+
+  backdrop-filter: blur(4px);
+  width: 100%;
+
+  position: sticky;
+  bottom: 0;
+}
+
+.basket-mobile-container button {
+  width: 100%;
+}
+
+.checkout-now-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8px 24px 24px 24px;
+  gap: 10px;
+  align-self: stretch;
+}
+
+@media screen and (max-width: 768px) {
+  .basket-pc-container {
+    display: none;
+  }
+
+  .basket-mobile-container {
+    display: block;
+  }
+}

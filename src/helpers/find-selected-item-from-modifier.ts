@@ -15,7 +15,6 @@ export const findSelectedItemFromModifier = ({
     return { selectedModifier: null, selectedItem: null };
   }
 
-  // Find the modifier based on modifierId
   const selectedModifier = modifiers.find(
     (modifier) => modifier.id === modifierId
   );
@@ -28,7 +27,6 @@ export const findSelectedItemFromModifier = ({
     return { selectedModifier: null, selectedItem: null };
   }
 
-  // Find the item based on itemId within the selected modifier
   const selectedItem = selectedModifier.items.find(
     (item) => item.id === itemId
   );

@@ -5,10 +5,10 @@ import { Spinner } from '@components/spinner';
 import { useDataFetcher } from '@hooks/use-data-fetcher';
 import { IMenu, IMenuItem } from '@/types/menu';
 import { useCategory } from '@contexts/category-context';
-import { MenuContent } from './components/menu-content';
 import './menu.css';
+import { Menu } from '.';
 
-export const Menu = () => {
+export const PageMenu = () => {
   const { data, loading } = useDataFetcher<IMenu>(fetchMenuDetails);
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState<IMenuItem[]>();
@@ -38,6 +38,7 @@ export const Menu = () => {
       item.name.toLowerCase().includes(searchValue.toLowerCase())
     );
     return setSearchResults(filteredCategoryData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue, selectedCategory]);
 
   if (loading) {
@@ -51,20 +52,22 @@ export const Menu = () => {
           <SearchInput value={searchValue} onChange={handleSearchValue} />
         </div>
         <div className='content-container'>
-          <MenuContent
+          <Menu.Content
             menuDetails={data}
             searchValue={searchValue}
             searchResults={searchResults}
             selectedCategory={selectedCategory}
           >
             <section className='allergen-link'>
-              <a href='https://www.pudim.com.br' target='_blank'>
+              <a
+                href='https://www.mcdonalds.com/gb/en-gb/good-to-know/allergen-booklet.html'
+                target='_blank'
+              >
                 View allergy information
               </a>
             </section>
-          </MenuContent>
-
-          <section>checkout</section>
+          </Menu.Content>
+          <Menu.Basket />
         </div>
       </div>
     </>

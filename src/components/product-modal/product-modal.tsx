@@ -6,28 +6,29 @@ import { numberToBRL } from '@helpers/format-number-to-brl';
 import { MinusIcon } from '@assets/icons/minus-icon';
 import { useWebSettings } from '@/theme-provider';
 import { PlusIcon } from '@assets/icons/plus-icon';
-import {
-  ModifierSelector,
-  SelectedModifier,
-} from './components/modifier-selector/modifier-selector';
+import { ModifierSelector } from './components/modifier-selector';
+import { SelectedModifier } from './components/modifier-selector/types';
 import { findSelectedItemFromModifier } from '@helpers/find-selected-item-from-modifier';
-import { Button } from '../button';
-import { BtnQuantity } from '../button-quantity';
+import { Button } from '@components/button';
+import { BtnQuantity } from '@components/button-quantity';
 import './product-modal.css';
+import { CheckoutObject } from '@/types/checkout';
+import { useCheckout } from '@/contexts/checkout-content';
 
 interface ProductModalProps {
-  isOpen: boolean;
+  isProductModalOpen: boolean;
   onClose: () => void;
   selectedProduct: IMenuItem | undefined;
 }
 
 export const ProductModal = ({
-  isOpen,
+  isProductModalOpen,
   onClose,
   selectedProduct,
 }: ProductModalProps) => {
   const INITIAL_QUANTITY = 1;
   const webSettings = useWebSettings();
+  const { addToCheckout } = useCheckout();
 
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState<number>();
@@ -65,7 +66,7 @@ export const ProductModal = ({
 
   // Reset state and calculate total price when modal reopens
   useEffect(() => {
-    if (isOpen && selectedProduct && selectedProduct.modifiers) {
+    if (isProductModalOpen && selectedProduct && selectedProduct.modifiers) {
       let totalPrice = selectedProduct.price || 0;
 
       selectedProduct.modifiers.forEach((modifier) => {
@@ -88,7 +89,7 @@ export const ProductModal = ({
         totalPrice - (totalPrice - selectedProduct.price * quantity)
       );
     }
-  }, [isOpen, selectedProduct, quantity, selectedModifier]);
+  }, [isProductModalOpen, selectedProduct, quantity, selectedModifier]);
 
   // Without that, the totalPrice doesn't reset
   useEffect(() => {
@@ -108,9 +109,8 @@ export const ProductModal = ({
     }
   }, [initialTotalPrice, selectedProduct]);
 
-  // Hide overflow when the modal is open
   useEffect(() => {
-    if (isOpen) {
+    if (isProductModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'visible';
@@ -120,14 +120,14 @@ export const ProductModal = ({
     return () => {
       document.body.style.overflow = 'visible';
     };
-  }, [isOpen, handleResetModal]);
+  }, [isProductModalOpen, handleResetModal]);
 
-  if (!isOpen) {
+  if (!isProductModalOpen) {
     return null;
   }
 
   const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation(); // Prevent the click from propagating to the overlay
+    e.stopPropagation();
   };
 
   const handleModifierSelection = (modifierId: number, itemId: number) => {
@@ -162,8 +162,8 @@ export const ProductModal = ({
   };
 
   const handleAddToOrder = () => {
-    // TODO: ADD CHECKOUT CONTEXT TO MAKE THIS THING PRETTY OMG
     let price = selectedProduct?.price;
+    let modifier;
 
     if (selectedProduct?.modifiers) {
       const selectedModifierId = Number(Object.keys(selectedModifier)[0]);
@@ -178,28 +178,30 @@ export const ProductModal = ({
 
       if (selectedModifierItemObj) {
         price = selectedModifierItemObj.price;
+        modifier = selectedModifierItemObj;
       }
     }
 
-    const formattedCheckoutObj = {
+    const formattedCheckoutObj: CheckoutObject = {
       refIdProduct: selectedProduct?.id,
       name: selectedProduct?.name,
       price,
       quantity,
+      modifierProps: selectedProduct?.modifiers ? modifier : undefined,
       totalPrice: totalPrice,
       otherProps: selectedProduct,
     };
-    console.log(formattedCheckoutObj);
 
+    addToCheckout(formattedCheckoutObj);
     handleCloseModalClick();
   };
 
-  if (!isOpen || !selectedProduct) {
+  if (!isProductModalOpen || !selectedProduct) {
     return null;
   }
 
   return (
-    <div className='modal-overlay'>
+    <div className='modal-overlay' onClick={handleCloseModalClick}>
       <div className='modal-content' onClick={stopPropagation}>
         <button className='modal-close-button' onClick={handleCloseModalClick}>
           <CloseIcon />
@@ -245,7 +247,7 @@ export const ProductModal = ({
             </BtnQuantity>
             <span className='quantity-value'>{quantity}</span>
             <BtnQuantity onClick={handleIncrement}>
-              <PlusIcon bgColor={webSettings?.primaryColour} />
+              <PlusIcon />
             </BtnQuantity>
           </div>
           <Button

@@ -4,6 +4,8 @@ import { numberToBRL } from '@helpers/format-number-to-brl';
 import { truncateString } from '@helpers/truncate-string';
 import { IMenuItem } from '@/types/menu';
 import './menu-item.css';
+import { useCheckout } from '@/contexts/checkout-content';
+import { useWebSettings } from '@/theme-provider';
 
 export interface MenuItemProps {
   items?: IMenuItem[];
@@ -13,12 +15,24 @@ export const MenuItem = ({ items }: MenuItemProps) => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<IMenuItem>();
 
+  const webSettings = useWebSettings();
+  const { isInCheckout } = useCheckout();
+
   const priceFormatter = (item: IMenuItem) => {
     if (item.price > 0) {
       return numberToBRL(item.price);
     }
 
     return numberToBRL(item.modifiers?.[0].items[0].price || 0);
+  };
+
+  const handleCounterValue = (itemId: number): number | null => {
+    const itemInCheckout = isInCheckout(itemId);
+
+    if (itemInCheckout) {
+      return itemInCheckout.quantity;
+    }
+    return null;
   };
 
   const handleModal = (item: IMenuItem) => {
@@ -42,7 +56,19 @@ export const MenuItem = ({ items }: MenuItemProps) => {
                 onClick={() => handleModal(item)}
               >
                 <div className='info-left'>
-                  <h3>{item.name}</h3>
+                  <h3>
+                    {handleCounterValue(item.id) && (
+                      <>
+                        <span
+                          className='item-counter-checkout'
+                          style={{ background: webSettings?.primaryColour }}
+                        >
+                          {handleCounterValue(item.id)}
+                        </span>{' '}
+                      </>
+                    )}
+                    {item.name}
+                  </h3>
                   <p className='description'>
                     {truncateString(item.description || '')}
                   </p>
@@ -60,7 +86,7 @@ export const MenuItem = ({ items }: MenuItemProps) => {
       </div>
 
       <ProductModal
-        isOpen={isProductModalOpen}
+        isProductModalOpen={isProductModalOpen}
         onClose={() => setIsProductModalOpen(false)}
         selectedProduct={selectedProduct}
       />

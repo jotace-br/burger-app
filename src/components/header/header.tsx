@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useWebSettings } from '@/theme-provider';
 import './header.css';
+import { BannerContainer } from '@components/banner-container';
 interface HeaderProps {
   children?: React.ReactNode;
 }
@@ -72,9 +73,7 @@ export const Header = ({ children }: HeaderProps) => {
         )}
       </nav>
 
-      <div className='banner-container'>
-        <img src={webSettings?.bannerImage} alt='Burgers Grill House' />
-      </div>
+      <BannerContainer $image={webSettings?.bannerImage} />
       <Outlet />
       {children}
     </>

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { IMenu, IMenuItem, MenuSection } from '@/types/menu';
 import { CategorySelector } from '@components/category-selector';
-import { MenuItem } from '../menu-item';
+import { MenuItem } from '@components/menu-item';
 import { Accordion } from '@components/accordion';
 import './menu-content.css';
 

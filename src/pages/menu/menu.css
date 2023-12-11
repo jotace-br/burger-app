@@ -12,12 +12,13 @@
 }
 
 .content-container {
+  padding: 32px 40px;
   background-color: #f8f9fa;
   width: 100%;
   max-width: 1024px;
-  margin-bottom: 6px;
   display: flex;
   flex-direction: row;
+  margin-bottom: 32px;
 }
 
 .allergen-link {
@@ -55,19 +56,17 @@
   .content-container {
     background-color: inherit;
   }
-
-  .main-content {
-    max-width: none;
-  }
 }
 
 @media screen and (max-width: 768px) {
-  .menu-container {
+  .menu-container,
+  .content-container {
     padding: 0;
   }
 
   .content-container {
     flex-direction: column;
+    margin-bottom: 0px; /* The basket btn will have absolute position */
   }
 
   .allergen-link {
