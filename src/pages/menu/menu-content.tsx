@@ -25,7 +25,13 @@ export const MenuContent = ({
 
     {searchValue.length >= 2 ? (
       <section className='search-results'>
-        {searchValue.length >= 2 && <MenuItem items={searchResults} />}
+        {searchResults?.length ? (
+          <MenuItem items={searchResults} />
+        ) : (
+          <div className='search-results-no-result'>
+            Nenhum resultado encontrado.
+          </div>
+        )}
       </section>
     ) : selectedCategory ? (
       <Accordion key={selectedCategory.id} sectionName={selectedCategory.name}>
@@ -38,7 +44,6 @@ export const MenuContent = ({
         </Accordion>
       ))
     )}
-
     {children}
   </section>
 );

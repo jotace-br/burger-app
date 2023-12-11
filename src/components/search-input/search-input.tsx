@@ -10,7 +10,9 @@ interface SearchInputProps {
 export const SearchInput = ({ value, onChange }: SearchInputProps) => {
   return (
     <div className='search-container'>
-      <SearchIcon />
+      <span className='search-container-icon'>
+        <SearchIcon />
+      </span>
       <input
         className='search-input'
         type='search'
