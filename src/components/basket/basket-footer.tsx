@@ -18,6 +18,7 @@ export const BasketFooter = () => {
           <p>Sub total</p>
           <p>{total}</p>
         </div>
+        <div className='footer-divider' />
         <div className='footer-total'>
           <p>Total:</p>
           <p>{total}</p>
