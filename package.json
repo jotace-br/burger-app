@@ -1,7 +1,7 @@
 {
   "name": "burgers-app",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "author": "Júlio César <jc10ferreira@gmail.com>",
   "scripts": {
