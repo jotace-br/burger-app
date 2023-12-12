@@ -1,6 +1,6 @@
 import { IMenuItem } from '@/types/menu';
 import { findSelectedItemFromModifier } from './find-selected-item-from-modifier';
-import { SelectedModifier } from '@/components/product-modal/components/modifier-selector/types';
+import { SelectedModifier } from '@components/modifier-selector/types';
 
 interface CalculateTotalPriceProps {
   selectedProduct?: IMenuItem;
@@ -11,7 +11,7 @@ interface CalculateTotalPriceProps {
 export const calculateTotalPrice = ({
   selectedProduct,
   selectedModifier,
-  quantity,
+  quantity = 1,
 }: CalculateTotalPriceProps) => {
   if (!selectedProduct) {
     return 0;
@@ -22,14 +22,15 @@ export const calculateTotalPrice = ({
   if (selectedProduct.modifiers) {
     selectedProduct.modifiers.forEach((modifier) => {
       const selectedItemId = selectedModifier[modifier.id];
-      const selectedItem = findSelectedItemFromModifier({
+
+      const { selectedItem } = findSelectedItemFromModifier({
         modifiers: selectedProduct.modifiers,
         modifierId: modifier.id,
         itemId: selectedItemId,
-      }).selectedItem;
+      });
 
       if (selectedItem) {
-        totalPrice += selectedItem.price;
+        totalPrice = selectedItem.price;
       }
     });
   }
