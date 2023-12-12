@@ -41,9 +41,10 @@
 .item-counter-checkout {
   border-radius: 4px;
   background: unset;
-  width: 18px;
+  min-width: 18px;
+  width: fit-content;
   height: 18px;
-  padding: 1px 4px;
+  padding: 0.5px 4px;
 
   display: flex;
   justify-content: space-around;
