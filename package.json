@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "author": "Júlio César <jc10ferreira@gmail.com>",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
