@@ -6,8 +6,8 @@ import { numberToBRL } from '@helpers/format-number-to-brl';
 import { MinusIcon } from '@assets/icons/minus-icon';
 import { useWebSettings } from '@/theme-provider';
 import { PlusIcon } from '@assets/icons/plus-icon';
-import { ModifierSelector } from './components/modifier-selector';
-import { SelectedModifier } from './components/modifier-selector/types';
+import { ModifierSelector } from '../modifier-selector';
+import { SelectedModifier } from '../modifier-selector/types';
 import { findSelectedItemFromModifier } from '@helpers/find-selected-item-from-modifier';
 import { Button } from '@components/button';
 import { BtnQuantity } from '@components/button-quantity';
@@ -107,10 +107,9 @@ export const ProductModal = ({
   };
 
   const handleModifierSelection = (modifierId: number, itemId: number) => {
-    setSelectedModifier((prevSelectedModifier) => ({
-      ...prevSelectedModifier,
-      [modifierId]: itemId,
-    }));
+    const updatedSelectedModifier = { ...selectedModifier };
+    updatedSelectedModifier[modifierId] = itemId;
+    setSelectedModifier(updatedSelectedModifier);
   };
 
   const updateQuantityAndPrice = (newQuantity: number) => {
