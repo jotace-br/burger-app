@@ -7,7 +7,7 @@
     "skipLibCheck": true,
 
     /* Jest*/
-    "esModuleInterop": true,
+    // "esModuleInterop": true,
 
     "baseUrl": ".",
     "paths": {
