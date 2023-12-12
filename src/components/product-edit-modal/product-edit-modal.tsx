@@ -19,7 +19,7 @@ import { calculateTotalPrice } from '@helpers/calculate-total-price';
 interface ProductEditModalProps {
   isProductModalOpen: boolean;
   onClose: () => void;
-  selectedProductToEdit: IMenuItem | undefined;
+  selectedProductToEdit?: IMenuItem;
 }
 
 export const ProductEditModal = ({

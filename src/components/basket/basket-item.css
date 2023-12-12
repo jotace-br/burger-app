@@ -7,12 +7,19 @@
 .basket-item {
   padding: 8px 16px;
   color: #121212;
+  transition: 0.3s background-color ease-in-out;
 }
 
 .basket-label-wrapper {
   display: flex;
   gap: 10px;
   justify-content: space-between;
+}
+
+.basket-item:hover,
+.basket-item:focus {
+  cursor: pointer;
+  background-color: #eaeaeab3;
 }
 
 .basket-label-wrapper p:nth-child(2) {
@@ -27,6 +34,7 @@
 .basket-quantity-wrapper {
   padding: 8px;
   gap: 16px;
+  width: fit-content;
 }
 
 .basket-quantity-controls {
