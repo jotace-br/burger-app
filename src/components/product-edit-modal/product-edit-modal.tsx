@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CloseIcon } from '@assets/icons/close-icon';
 import { NoImageIcon } from '@assets/icons/no-image-icon';
 import { IMenuItem } from '@/types/menu';
