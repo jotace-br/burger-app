@@ -20,12 +20,14 @@ interface ProductEditModalProps {
   isProductModalOpen: boolean;
   onClose: () => void;
   selectedProductToEdit?: IMenuItem;
+  shouldResetUserScroll?: boolean;
 }
 
 export const ProductEditModal = ({
   isProductModalOpen,
   onClose,
   selectedProductToEdit,
+  shouldResetUserScroll = true,
 }: ProductEditModalProps) => {
   const INITIAL_QUANTITY = 1;
   const webSettings = useWebSettings();
@@ -64,13 +66,15 @@ export const ProductEditModal = ({
     if (isProductModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'visible';
-    }
+      if (shouldResetUserScroll || window.innerWidth > 768) {
+        document.body.style.overflow = 'visible';
 
-    return () => {
-      document.body.style.overflow = 'visible';
-    };
-  }, [isProductModalOpen]);
+        return () => {
+          document.body.style.overflow = 'visible';
+        };
+      }
+    }
+  }, [isProductModalOpen, shouldResetUserScroll]);
 
   if (!isProductModalOpen) {
     return null;
