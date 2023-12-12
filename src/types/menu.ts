@@ -18,6 +18,10 @@ export interface IMenuItem {
   available: boolean;
   qty?: number;
   modifiers?: IMenuItemModifier[];
+  quantity?: number;
+  totalPrice?: number | undefined;
+  modifierProps?: IMenuItem | undefined;
+  otherProps?: IMenuItem | undefined;
 }
 
 export interface IMenuItemModifier {
