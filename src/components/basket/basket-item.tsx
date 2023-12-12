@@ -26,6 +26,10 @@ export const BasketItem = ({ basketItem }: BasketItemProps) => {
 
   const webSettings = useWebSettings();
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const handleEditModal = async (event: React.MouseEvent) => {
     const target = event.target as Element;
     const isClickInQuantityWrapper = target.closest('.basket-quantity-wrapper');
@@ -121,6 +125,7 @@ export const BasketItem = ({ basketItem }: BasketItemProps) => {
         isProductModalOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         selectedProductToEdit={modalContent}
+        shouldResetUserScroll={false}
       />
     </>
   );
