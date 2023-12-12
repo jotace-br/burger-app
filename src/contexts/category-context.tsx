@@ -1,9 +1,11 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { MenuSection } from '@/types/menu';
+import { IMenuSection } from '@/types/menu';
 
 interface CategoryContextProps {
-  selectedCategory: MenuSection | null;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<MenuSection | null>>;
+  selectedCategory: IMenuSection | null;
+  setSelectedCategory: React.Dispatch<
+    React.SetStateAction<IMenuSection | null>
+  >;
 }
 
 interface CategoryProviderProps {
@@ -24,7 +26,7 @@ export const useCategory = () => {
 };
 
 export const CategoryProvider = ({ children }: CategoryProviderProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<MenuSection | null>(
+  const [selectedCategory, setSelectedCategory] = useState<IMenuSection | null>(
     null
   );
 

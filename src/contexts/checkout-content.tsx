@@ -4,7 +4,8 @@ import { createContext, useState, useContext, ReactNode } from 'react';
 interface CheckoutContextProps {
   checkoutList: CheckoutObject[] | undefined;
   addToCheckout: (product: CheckoutObject) => void;
-  editCheckoutItem: (productId: number, newQuantity: number) => void;
+  updateCheckoutProduct: (product: CheckoutObject) => void;
+  editCheckoutQuantityItem: (productId: number, newQuantity: number) => void;
   removeFromCheckout: (productId: number) => void;
   isInCheckout: (productId: number) => CheckoutObject | undefined;
   getTotalQuantity: () => number;
@@ -45,7 +46,21 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
     setCheckoutList(updatedList);
   };
 
-  const editCheckoutItem = (productId: number, newQuantity: number) => {
+  const updateCheckoutProduct = (product: CheckoutObject) => {
+    const updatedCheckoutList = [...checkoutList];
+
+    const existingProductIndex = updatedCheckoutList.findIndex(
+      (item) => item.refIdProduct === product.refIdProduct
+    );
+
+    if (existingProductIndex !== -1) {
+      updatedCheckoutList[existingProductIndex] = product;
+    }
+
+    setCheckoutList(updatedCheckoutList);
+  };
+
+  const editCheckoutQuantityItem = (productId: number, newQuantity: number) => {
     const updatedList = checkoutList.map((item) =>
       item.refIdProduct === productId
         ? {
@@ -81,7 +96,8 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
   const contextValue: CheckoutContextProps = {
     checkoutList,
     addToCheckout,
-    editCheckoutItem,
+    updateCheckoutProduct,
+    editCheckoutQuantityItem,
     removeFromCheckout,
     isInCheckout,
     getTotalQuantity,

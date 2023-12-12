@@ -1,11 +1,11 @@
 import './category-selector.css';
-import { MenuSection } from '@/types/menu';
+import { IMenuSection } from '@/types/menu';
 import styled from 'styled-components';
 import { useWebSettings } from '@/theme-provider';
 import { useCategory } from '@contexts/category-context';
 
 interface CategorySelectorProps {
-  data: MenuSection[] | undefined;
+  data: IMenuSection[] | undefined;
 }
 
 const CategoryItem = styled.div<{
@@ -55,7 +55,7 @@ export const CategorySelector = ({ data }: CategorySelectorProps) => {
   const { selectedCategory, setSelectedCategory } = useCategory();
   const webSettings = useWebSettings();
 
-  const changeCategory = (category: MenuSection) => {
+  const changeCategory = (category: IMenuSection) => {
     if (selectedCategory === category) {
       setSelectedCategory(null);
     } else {
