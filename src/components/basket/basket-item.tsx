@@ -121,6 +121,7 @@ export const BasketItem = ({ basketItem }: BasketItemProps) => {
         isProductModalOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         selectedProductToEdit={modalContent}
+        shouldResetUserScroll={false}
       />
     </>
   );
