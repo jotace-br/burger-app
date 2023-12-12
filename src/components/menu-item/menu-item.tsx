@@ -6,6 +6,7 @@ import { IMenuItem } from '@/types/menu';
 import './menu-item.css';
 import { useCheckout } from '@/contexts/checkout-content';
 import { useWebSettings } from '@/theme-provider';
+import { ProductEditModal } from '../product-edit-modal';
 
 export interface MenuItemProps {
   items?: IMenuItem[];
@@ -13,6 +14,7 @@ export interface MenuItemProps {
 
 export const MenuItem = ({ items }: MenuItemProps) => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<IMenuItem>();
 
   const webSettings = useWebSettings();
@@ -36,8 +38,14 @@ export const MenuItem = ({ items }: MenuItemProps) => {
   };
 
   const handleModal = (item: IMenuItem) => {
-    setIsProductModalOpen(!isProductModalOpen);
+    const itemInCheckout = isInCheckout(item.id);
+
+    if (itemInCheckout) {
+      setSelectedProduct({ ...item, ...itemInCheckout });
+      return setIsProductEditModalOpen(!isProductEditModalOpen);
+    }
     setSelectedProduct(item);
+    return setIsProductModalOpen(!isProductModalOpen);
   };
 
   return (
@@ -95,6 +103,12 @@ export const MenuItem = ({ items }: MenuItemProps) => {
         isProductModalOpen={isProductModalOpen}
         onClose={() => setIsProductModalOpen(false)}
         selectedProduct={selectedProduct}
+      />
+
+      <ProductEditModal
+        isProductModalOpen={isProductEditModalOpen}
+        onClose={() => setIsProductEditModalOpen(false)}
+        selectedProductToEdit={selectedProduct}
       />
     </>
   );

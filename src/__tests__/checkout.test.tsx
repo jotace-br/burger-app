@@ -63,7 +63,7 @@ const MockChildComponent = () => {
   const {
     checkoutList,
     addToCheckout,
-    editCheckoutItem,
+    editCheckoutQuantityItem,
     removeFromCheckout,
     getTotalQuantity,
     isInCheckout,
@@ -81,7 +81,7 @@ const MockChildComponent = () => {
       </button>
       <button
         data-testid='edit-btn'
-        onClick={() => editCheckoutItem(product.refIdProduct || 0, 5)}
+        onClick={() => editCheckoutQuantityItem(product.refIdProduct || 0, 5)}
       >
         Edit Checkout Item
       </button>
