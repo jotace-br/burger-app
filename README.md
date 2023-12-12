@@ -51,6 +51,7 @@ Explanation of the development process, methodologies, technologies, or framewor
 - Created an alias for every folder, it was becoming difficult to navigate between files.
 - The SF Pro font is not open source and I think messing with Apple might not be a good idea, so I used Switzer instead, which is 95% similar to the SF Pro.
 - I made my life so easier after creating a React Context for the basket/checkout item.
+- Created the "product-edit-modal" to finally handle the product from basket and added the possibility to open the menu item from checkout
 - Done.
 
 ## Contributing
