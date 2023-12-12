@@ -11,19 +11,21 @@ export const BasketFooter = () => {
     setTotal(sumTotalPrices(checkoutList));
   }, [checkoutList]);
 
+  if (!checkoutList?.length) {
+    return null;
+  }
+
   return (
-    !!checkoutList?.length && (
-      <div className='checkout-footer'>
-        <div className='footer-subtotal'>
-          <p>Sub total</p>
-          <p>{total}</p>
-        </div>
-        <div className='footer-divider' />
-        <div className='footer-total'>
-          <p>Total:</p>
-          <p>{total}</p>
-        </div>
+    <div className='checkout-footer'>
+      <div className='footer-subtotal'>
+        <p>Sub total</p>
+        <p>{total}</p>
       </div>
-    )
+      <div className='footer-divider' />
+      <div className='footer-total'>
+        <p>Total:</p>
+        <p>{total}</p>
+      </div>
+    </div>
   );
 };

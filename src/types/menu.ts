@@ -6,16 +6,22 @@ interface MenuItemImage {
 export interface IMenuItem {
   id: number;
   name: string;
-  description: string | null;
-  alcoholic: number;
+  description?: string;
+  alcoholic?: number;
   price: number;
+  maxChoices?: number;
   position: number;
-  visible: number;
+  visible?: number;
   availabilityType: string;
-  sku: string;
-  images: MenuItemImage[];
+  sku?: string;
+  images?: MenuItemImage[];
   available: boolean;
+  qty?: number;
   modifiers?: IMenuItemModifier[];
+  quantity?: number;
+  totalPrice?: number | undefined;
+  modifierProps?: IMenuItem | undefined;
+  otherProps?: IMenuItem | undefined;
 }
 
 export interface IMenuItemModifier {
@@ -26,12 +32,12 @@ export interface IMenuItemModifier {
   items: IMenuItem[];
 }
 
-export interface MenuSection {
+export interface IMenuSection {
   id: number;
   name: string;
-  description: string | null;
+  description?: string | null;
   position: number;
-  visible: number;
+  visible?: number;
   images: MenuItemImage[];
   items: IMenuItem[];
 }
@@ -41,5 +47,6 @@ export interface IMenu {
   name: string;
   type: string;
   collapse: number;
-  sections: MenuSection[];
+  sections: IMenuSection[];
+  items?: IMenuItem[];
 }

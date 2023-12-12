@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CloseIcon } from '@assets/icons/close-icon';
 import { NoImageIcon } from '@assets/icons/no-image-icon';
 import { IMenuItem } from '@/types/menu';
@@ -6,97 +6,71 @@ import { numberToBRL } from '@helpers/format-number-to-brl';
 import { MinusIcon } from '@assets/icons/minus-icon';
 import { useWebSettings } from '@/theme-provider';
 import { PlusIcon } from '@assets/icons/plus-icon';
-import { ModifierSelector } from '../modifier-selector';
-import { SelectedModifier } from '../modifier-selector/types';
+import { ModifierSelector } from '@components/modifier-selector';
+import { SelectedModifier } from '@components/modifier-selector/types';
 import { findSelectedItemFromModifier } from '@helpers/find-selected-item-from-modifier';
 import { Button } from '@components/button';
 import { BtnQuantity } from '@components/button-quantity';
-import './product-modal.css';
+import './product-edit-modal.css';
 import { CheckoutObject } from '@/types/checkout';
 import { useCheckout } from '@/contexts/checkout-content';
 import { calculateTotalPrice } from '@helpers/calculate-total-price';
 
-interface ProductModalProps {
+interface ProductEditModalProps {
   isProductModalOpen: boolean;
   onClose: () => void;
-  selectedProduct: IMenuItem | undefined;
+  selectedProductToEdit: IMenuItem | undefined;
 }
 
-export const ProductModal = ({
+export const ProductEditModal = ({
   isProductModalOpen,
   onClose,
-  selectedProduct,
-}: ProductModalProps) => {
+  selectedProductToEdit,
+}: ProductEditModalProps) => {
   const INITIAL_QUANTITY = 1;
   const webSettings = useWebSettings();
-  const { addToCheckout } = useCheckout();
+  const { updateCheckoutProduct } = useCheckout();
 
-  const [quantity, setQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState<number>();
-  const [initialTotalPrice, setInitialTotalPrice] = useState<number>(
-    selectedProduct?.price || 0
+  const [quantity, setQuantity] = useState(
+    selectedProductToEdit?.quantity || INITIAL_QUANTITY
   );
+  const [totalPrice, setTotalPrice] = useState<number>(0);
   const [selectedModifier, setSelectedModifier] = useState<SelectedModifier>(
-    {}
+    () => {
+      const itemId = Number(selectedProductToEdit?.modifierProps?.id);
+      const modifierId = Number(selectedProductToEdit?.modifiers?.[0]?.id);
+      return { [modifierId]: itemId };
+    }
   );
 
-  // Reset state and calculate total price when modal reopens
   useEffect(() => {
-    if (isProductModalOpen && selectedProduct && selectedProduct.modifiers) {
-      let totalPrice = selectedProduct.price || 0;
-
-      selectedProduct.modifiers.forEach((modifier) => {
-        const selectedItemId = selectedModifier[modifier.id];
-        const selectedItem = findSelectedItemFromModifier({
-          modifiers: selectedProduct.modifiers,
-          modifierId: modifier.id,
-          itemId: selectedItemId,
-        }).selectedItem;
-
-        if (selectedItem) {
-          totalPrice += selectedItem.price;
-        }
-      });
-
-      totalPrice *= quantity;
-
-      setTotalPrice(totalPrice);
-      setInitialTotalPrice(
-        totalPrice - (totalPrice - selectedProduct.price * quantity)
+    if (isProductModalOpen && selectedProductToEdit?.quantity) {
+      setQuantity(selectedProductToEdit.quantity);
+      setTotalPrice(
+        calculateTotalPrice({
+          selectedProduct: selectedProductToEdit,
+          selectedModifier,
+          quantity: selectedProductToEdit.quantity,
+        })
       );
-    }
-  }, [isProductModalOpen, selectedProduct, quantity, selectedModifier]);
 
-  // Without that, the totalPrice doesn't reset
-  useEffect(() => {
-    if (selectedProduct) {
-      setInitialTotalPrice(selectedProduct.price || 0);
-      setTotalPrice(selectedProduct.price || 0);
+      const itemId = Number(selectedProductToEdit?.modifierProps?.id);
+      const modifierId = Number(selectedProductToEdit?.modifiers?.[0]?.id);
+      setSelectedModifier({ [modifierId]: itemId });
     }
-  }, [selectedProduct]);
-
-  const handleResetModal = useCallback(() => {
-    setQuantity(INITIAL_QUANTITY);
-    if (selectedProduct) {
-      setTotalPrice(initialTotalPrice * INITIAL_QUANTITY);
-    }
-    if (selectedProduct?.modifiers) {
-      setSelectedModifier({});
-    }
-  }, [initialTotalPrice, selectedProduct]);
+  }, [isProductModalOpen, selectedProductToEdit]);
 
   useEffect(() => {
     if (isProductModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'visible';
-      handleResetModal();
     }
 
     return () => {
       document.body.style.overflow = 'visible';
     };
-  }, [isProductModalOpen, handleResetModal]);
+  }, [isProductModalOpen]);
 
   if (!isProductModalOpen) {
     return null;
@@ -110,13 +84,20 @@ export const ProductModal = ({
     const updatedSelectedModifier = { ...selectedModifier };
     updatedSelectedModifier[modifierId] = itemId;
     setSelectedModifier(updatedSelectedModifier);
+    setTotalPrice(
+      calculateTotalPrice({
+        selectedProduct: selectedProductToEdit,
+        selectedModifier: updatedSelectedModifier,
+        quantity,
+      })
+    );
   };
 
   const updateQuantityAndPrice = (newQuantity: number) => {
     setQuantity(newQuantity);
     setTotalPrice(
       calculateTotalPrice({
-        selectedProduct,
+        selectedProduct: selectedProductToEdit,
         selectedModifier,
         quantity: newQuantity,
       })
@@ -143,42 +124,44 @@ export const ProductModal = ({
     onClose();
   };
 
-  const handleAddToOrder = () => {
-    let price = selectedProduct?.price;
+  const handleUpdateOrder = () => {
+    let price = selectedProductToEdit?.price;
     let modifier;
 
-    if (selectedProduct?.modifiers) {
-      const selectedModifierId = Number(Object.keys(selectedModifier)[0]);
-      const selectedModifierItemId = Number(Object.values(selectedModifier)[0]);
+    if (selectedProductToEdit?.modifiers) {
+      const selectedModifierId = Number(Object.keys(selectedModifier || {})[0]);
+      const selectedModifierItemId = Number(
+        Object.values(selectedModifier || {})[0]
+      );
 
-      const { selectedItem: selectedModifierItemObj } =
-        findSelectedItemFromModifier({
-          modifiers: selectedProduct.modifiers,
-          modifierId: selectedModifierId,
-          itemId: selectedModifierItemId,
-        });
+      const { selectedItem } = findSelectedItemFromModifier({
+        modifiers: selectedProductToEdit.modifiers,
+        modifierId: selectedModifierId,
+        itemId: selectedModifierItemId,
+      });
 
-      if (selectedModifierItemObj) {
-        price = selectedModifierItemObj.price;
-        modifier = selectedModifierItemObj;
+      if (selectedItem) {
+        price = selectedItem.price;
+        modifier = selectedItem;
       }
     }
 
     const formattedCheckoutObj: CheckoutObject = {
-      refIdProduct: selectedProduct?.id,
-      name: selectedProduct?.name,
+      refIdProduct: selectedProductToEdit?.id,
+      name: selectedProductToEdit?.name,
       price,
       quantity,
-      modifierProps: selectedProduct?.modifiers ? modifier : undefined,
+      modifierProps: selectedProductToEdit?.modifiers ? modifier : undefined,
       totalPrice: totalPrice,
-      otherProps: selectedProduct,
+      otherProps: selectedProductToEdit,
     };
 
-    addToCheckout(formattedCheckoutObj);
+    updateCheckoutProduct(formattedCheckoutObj);
+
     handleCloseModalClick();
   };
 
-  if (!isProductModalOpen || !selectedProduct) {
+  if (!isProductModalOpen || !selectedProductToEdit) {
     return null;
   }
 
@@ -189,11 +172,11 @@ export const ProductModal = ({
           <CloseIcon />
         </button>
 
-        {selectedProduct?.images ? (
+        {selectedProductToEdit?.images ? (
           <img
             className='product-photo'
-            src={selectedProduct?.images[0].image}
-            alt={selectedProduct?.name}
+            src={selectedProductToEdit?.images[0].image}
+            alt={selectedProductToEdit?.name}
             width='100%'
             height='320px'
             loading='lazy'
@@ -205,17 +188,17 @@ export const ProductModal = ({
         )}
         <div className='modal-content-container'>
           <div className='modal-content-product-info'>
-            <h2 className='modal-title'>{selectedProduct?.name}</h2>
+            <h2 className='modal-title'>{selectedProductToEdit?.name}</h2>
             <p className='modal-description'>
-              {selectedProduct?.description
-                ? selectedProduct?.description
+              {selectedProductToEdit?.description
+                ? selectedProductToEdit?.description
                 : 'Sem descrição adicional.'}
             </p>
           </div>
 
           <section className='modal-modifier-selector'>
             <ModifierSelector
-              modifiers={selectedProduct?.modifiers}
+              modifiers={selectedProductToEdit?.modifiers}
               selectedModifier={selectedModifier}
               onSelectModifier={handleModifierSelection}
             />
@@ -237,17 +220,18 @@ export const ProductModal = ({
           </div>
           <Button
             disabled={
-              selectedProduct?.modifiers
+              selectedProductToEdit?.modifiers
                 ? !Object.keys(selectedModifier).length
                 : false
             }
             $bgColor={webSettings?.primaryColour}
-            onClick={handleAddToOrder}
+            onClick={handleUpdateOrder}
           >
-            {selectedProduct?.modifiers && !Object.keys(selectedModifier).length
-              ? 'Select a modifier'
-              : 'Add to Order • '}
-            {numberToBRL(totalPrice || selectedProduct?.price)}
+            {selectedProductToEdit?.modifiers &&
+            !Object.keys(selectedModifier).length
+              ? 'Select a modifier • '
+              : 'Update Order • '}
+            {numberToBRL(totalPrice || selectedProductToEdit?.price)}
           </Button>
         </div>
       </div>

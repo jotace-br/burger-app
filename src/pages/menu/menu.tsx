@@ -7,6 +7,7 @@ import { IMenu, IMenuItem } from '@/types/menu';
 import { useCategory } from '@contexts/category-context';
 import './menu.css';
 import { Menu } from '.';
+import { searchMenuItem } from '@/helpers/search-menu-item';
 
 export const PageMenu = () => {
   const { data, loading } = useDataFetcher<IMenu>(fetchMenuDetails);
@@ -22,23 +23,9 @@ export const PageMenu = () => {
   };
 
   useEffect(() => {
-    if (!selectedCategory) {
-      const allItems = data?.sections
-        .flatMap((section) => section.items)
-        .map((item) => item);
-
-      const filteredData = allItems?.filter((item) =>
-        item.name.toLowerCase().includes(searchValue.toLowerCase())
-      );
-
-      return setSearchResults(filteredData);
-    }
-
-    const filteredCategoryData = selectedCategory.items.filter((item) =>
-      item.name.toLowerCase().includes(searchValue.toLowerCase())
+    return setSearchResults(
+      searchMenuItem({ searchValue, data, selectedCategory })
     );
-    return setSearchResults(filteredCategoryData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue, selectedCategory]);
 
   if (loading) {

@@ -13,13 +13,16 @@ export interface BasketItemProps {
 }
 
 export const BasketItem = ({ basketItem }: BasketItemProps) => {
-  const { editCheckoutItem, removeFromCheckout } = useCheckout();
+  const { editCheckoutQuantityItem, removeFromCheckout } = useCheckout();
 
   const webSettings = useWebSettings();
 
   const handleIncrement = () => {
     if (basketItem.refIdProduct) {
-      editCheckoutItem(basketItem.refIdProduct, basketItem.quantity + 1);
+      editCheckoutQuantityItem(
+        basketItem.refIdProduct,
+        basketItem.quantity + 1
+      );
     }
   };
 
@@ -29,7 +32,10 @@ export const BasketItem = ({ basketItem }: BasketItemProps) => {
     }
 
     if (basketItem.quantity > 1) {
-      editCheckoutItem(basketItem.refIdProduct, basketItem.quantity - 1);
+      editCheckoutQuantityItem(
+        basketItem.refIdProduct,
+        basketItem.quantity - 1
+      );
     }
   };
 
