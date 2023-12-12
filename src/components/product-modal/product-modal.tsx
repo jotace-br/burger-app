@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CloseIcon } from '@assets/icons/close-icon';
 import { NoImageIcon } from '@assets/icons/no-image-icon';
 import { IMenuItem } from '@/types/menu';
@@ -14,6 +14,7 @@ import { BtnQuantity } from '@components/button-quantity';
 import './product-modal.css';
 import { CheckoutObject } from '@/types/checkout';
 import { useCheckout } from '@/contexts/checkout-content';
+import { calculateTotalPrice } from '@helpers/calculate-total-price';
 
 interface ProductModalProps {
   isProductModalOpen: boolean;
@@ -37,31 +38,6 @@ export const ProductModal = ({
   );
   const [selectedModifier, setSelectedModifier] = useState<SelectedModifier>(
     {}
-  );
-
-  const calculateTotalPrice = useMemo(
-    () => (newQuantity: number) => {
-      let totalPrice = initialTotalPrice;
-
-      if (selectedProduct && selectedProduct.modifiers) {
-        // Recalculate total price based on selected modifiers and quantity
-        selectedProduct.modifiers.forEach((modifier) => {
-          const selectedItemId = selectedModifier[modifier.id];
-          const selectedItem = findSelectedItemFromModifier({
-            modifiers: selectedProduct.modifiers,
-            modifierId: modifier.id,
-            itemId: selectedItemId,
-          }).selectedItem;
-
-          if (selectedItem) {
-            totalPrice += selectedItem.price;
-          }
-        });
-      }
-
-      return totalPrice * newQuantity;
-    },
-    [initialTotalPrice, selectedModifier, selectedProduct]
   );
 
   // Reset state and calculate total price when modal reopens
@@ -131,14 +107,21 @@ export const ProductModal = ({
   };
 
   const handleModifierSelection = (modifierId: number, itemId: number) => {
-    const updatedSelectedModifier = { ...selectedModifier };
-    updatedSelectedModifier[modifierId] = itemId;
-    setSelectedModifier(updatedSelectedModifier);
+    setSelectedModifier((prevSelectedModifier) => ({
+      ...prevSelectedModifier,
+      [modifierId]: itemId,
+    }));
   };
 
   const updateQuantityAndPrice = (newQuantity: number) => {
     setQuantity(newQuantity);
-    setTotalPrice(calculateTotalPrice(newQuantity));
+    setTotalPrice(
+      calculateTotalPrice({
+        selectedProduct,
+        selectedModifier,
+        quantity: newQuantity,
+      })
+    );
   };
 
   const handleIncrement = () => {
