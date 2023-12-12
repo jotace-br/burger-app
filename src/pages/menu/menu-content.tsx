@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { IMenu, IMenuItem, MenuSection } from '@/types/menu';
+import { IMenu, IMenuItem, IMenuSection } from '@/types/menu';
 import { CategorySelector } from '@components/category-selector';
 import { MenuItem } from '@components/menu-item';
 import { Accordion } from '@components/accordion';
@@ -9,7 +9,7 @@ export interface MenuContentProps {
   menuDetails: IMenu | undefined;
   searchValue: string;
   searchResults: IMenuItem[] | undefined;
-  selectedCategory: MenuSection | null;
+  selectedCategory: IMenuSection | null;
   children?: ReactNode;
 }
 

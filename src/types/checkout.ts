@@ -1,11 +1,11 @@
 import { IMenuItem } from '@/types/menu';
 
 export type CheckoutObject = {
-  refIdProduct: number | undefined;
-  name: string | undefined;
-  price: number | undefined;
+  refIdProduct?: number;
+  name?: string;
+  price?: number;
   quantity: number;
-  totalPrice: number | undefined;
-  modifierProps: IMenuItem | undefined;
-  otherProps: IMenuItem | undefined;
+  totalPrice?: number;
+  modifierProps?: IMenuItem;
+  otherProps?: IMenuItem;
 };
